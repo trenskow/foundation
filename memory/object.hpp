@@ -27,12 +27,7 @@ namespace fart::types {
 
 namespace fart::memory {
 
-	class Object
-#ifdef FART_ALLOW_MANUAL_HEAP
-	: public Allocator
-#else
-	: protected Allocator
-#endif
+	class Object : public Allocator
 	{
 
 		template<typename T>
@@ -96,11 +91,7 @@ namespace fart::memory {
 			return *this;
 		}
 
-#ifdef FART_ALLOW_MANUAL_HEAP
 	public:
-#else
-	protected:
-#endif
 
 		void retain() const {
 			this->_retainCount++;

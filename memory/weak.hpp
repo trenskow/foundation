@@ -22,12 +22,7 @@ namespace fart::memory {
 	class Strong;
 
 	template<typename T = Object>
-	class Weak
-#ifdef FART_ALLOW_MANUAL_HEAP
-	: public Allocator
-#else
-	: public NoAllocator
-#endif
+	class Weak : public Allocator
 	{
 
 		static_assert(std::is_base_of<Object, T>::value);

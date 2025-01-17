@@ -686,7 +686,7 @@ namespace fart::types {
 
 	private:
 
-		class Storage: public Allocator {
+		class Storage : public Allocator {
 
 		public:
 			Storage(const size_t length = 0) : _ptr(nullptr), _length(0), _retainCount(1) {
