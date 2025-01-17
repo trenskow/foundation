@@ -13,11 +13,6 @@ As of time of writing, Fart supports the following.
 
 * Automatic memory management through retain counting.
   * With support for self-nulling weak references.
-* I/O
-  * Socket
-    * IPv4
-    * IPv6
-  * File system
 * Types
   * String
     * Full Unicode support
@@ -44,7 +39,6 @@ As of time of writing, Fart supports the following.
   * Threads
   * Mutexes
   * Semaphores
-* A build-in HTTP server
 
 ## Why
 
@@ -61,4 +55,3 @@ Check out the source code, if you want to learn how it works.
 # License
 
 See LICENSE.
-
