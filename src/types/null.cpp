@@ -6,6 +6,8 @@
 // See license in LICENSE.
 //
 
+#include <stddef.h>
+
 #include "null.hpp"
 
 using namespace foundation::types;

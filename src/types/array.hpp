@@ -12,6 +12,8 @@
 #include <type_traits>
 #include <functional>
 
+#include <time.h>
+
 #include "../memory/strong.hpp"
 #include "./type.hpp"
 #include "./comparable.hpp"
