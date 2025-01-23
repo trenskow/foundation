@@ -201,7 +201,7 @@ namespace foundation::types {
 
 		Strong<String> lowercased() const;
 
-		inline Strong<String> capitalized() const;
+		Strong<String> capitalized() const;
 
 		Strong<String> trimmedStart() const;
 
