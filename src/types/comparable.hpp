@@ -1,17 +1,17 @@
 //
 // comparable.hpp
-// shared-foundation-cpp
+// foundation-cpp
 //
 // Created by Kristian Trenskow on 2023/01/21.
 // See license in LICENSE.
 //
 
-#ifndef shared_foundation_comparable_hpp
-#define shared_foundation_comparable_hpp
+#ifndef foundation_comparable_hpp
+#define foundation_comparable_hpp
 
 #include "./comparison.hpp"
 
-namespace games::zerobit::shared::foundation::types {
+namespace foundation::types {
 
 	template<typename T>
 	class Comparable {
@@ -42,4 +42,4 @@ namespace games::zerobit::shared::foundation::types {
 
 }
 
-#endif /* shared_foundation_comparable_hpp */
+#endif /* foundation_comparable_hpp */

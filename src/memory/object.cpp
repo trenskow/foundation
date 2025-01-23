@@ -1,6 +1,6 @@
 //
 // object.cpp
-// shared-foundation-cpp
+// foundation-cpp
 //
 // Created by Kristian Trenskow on 2025/01/22.
 // See license in LICENSE.
@@ -13,8 +13,8 @@
 
 #include "./object.hpp"
 
-using namespace games::zerobit::shared::foundation::memory;
-using namespace games::zerobit::shared::foundation::exceptions::memory;
+using namespace foundation::memory;
+using namespace foundation::exceptions::memory;
 
 void Object::addWeakReference(
 	void* weakReference

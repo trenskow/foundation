@@ -1,13 +1,13 @@
 //
 // strong.hpp
-// shared-foundation-cpp
+// foundation-cpp
 //
 // Created by Kristian Trenskow on 2018/08/17.
 // See license in LICENSE.
 //
 
-#ifndef shared_foundation_strong_hpp
-#define shared_foundation_strong_hpp
+#ifndef foundation_strong_hpp
+#define foundation_strong_hpp
 
 #include <assert.h>
 
@@ -19,7 +19,7 @@
 
 using namespace std;
 
-namespace games::zerobit::shared::foundation::memory {
+namespace foundation::memory {
 
 	template<typename T>
 	class Weak;
@@ -182,4 +182,4 @@ namespace games::zerobit::shared::foundation::memory {
 
 }
 
-#endif /* shared_foundation_strong_hpp */
+#endif /* foundation_strong_hpp */

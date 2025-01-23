@@ -1,6 +1,6 @@
 //
 // allocator.cpp
-// shared-foundation-cpp
+// foundation-cpp
 //
 // Created by Kristian Trenskow on 2025/01/22.
 // See license in LICENSE.
@@ -16,9 +16,9 @@
 
 #define FOUNDATION_BLOCK_SIZE 32
 
-using namespace games::zerobit::shared::foundation::memory;
-using namespace games::zerobit::shared::foundation::exceptions::memory;
-using namespace games::zerobit::shared::foundation::tools;
+using namespace foundation::memory;
+using namespace foundation::exceptions::memory;
+using namespace foundation::tools;
 
 void* Allocator::operator new(
 	size_t size

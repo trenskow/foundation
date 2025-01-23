@@ -1,6 +1,6 @@
 //
 // hashable.cpp
-// shared-foundation-cpp
+// foundation-cpp
 //
 // Created by Kristian Trenskow on 2022/01/22.
 // See license in LICENSE.
@@ -8,8 +8,8 @@
 
 #include "hashable.hpp"
 
-using namespace games::zerobit::shared::foundation::types;
-using namespace games::zerobit::shared::foundation::tools;
+using namespace foundation::types;
+using namespace foundation::tools;
 
 Hashable::Builder::Builder() : _hash(5381) { }
 

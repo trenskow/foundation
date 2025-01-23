@@ -1,17 +1,17 @@
 //
 // null.hpp
-// shared-foundation-cpp
+// foundation-cpp
 //
 // Created by Kristian Trenskow on 2020/04/01.
 // See license in LICENSE.
 //
 
-#ifndef shared_foundation_null_hpp
-#define shared_foundation_null_hpp
+#ifndef foundation_null_hpp
+#define foundation_null_hpp
 
 #include "type.hpp"
 
-namespace games::zerobit::shared::foundation::types {
+namespace foundation::types {
 
 	class Null: public Type {
 
@@ -37,4 +37,4 @@ namespace games::zerobit::shared::foundation::types {
 
 }
 
-#endif /* shared_foundation_null_hpp */
+#endif /* foundation_null_hpp */

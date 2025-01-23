@@ -1,19 +1,19 @@
 //
 // url.hpp
-// shared-foundation-cpp
+// foundation-cpp
 //
 // Created by Kristian Trenskow on 2019/12/12.
 // See license in LICENSE.
 //
 
-#ifndef shared_foundation_url_hpp
-#define shared_foundation_url_hpp
+#ifndef foundation_url_hpp
+#define foundation_url_hpp
 
 #include "../memory/object.hpp"
 #include "../memory/strong.hpp"
 #include "../types/string.hpp"
 
-namespace games::zerobit::shared::foundation::types {
+namespace foundation::types {
 
 	class URL : public Type {
 
@@ -95,4 +95,4 @@ namespace games::zerobit::shared::foundation::types {
 
 }
 
-#endif /* shared_foundation_url_hpp */
+#endif /* foundation_url_hpp */

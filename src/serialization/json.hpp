@@ -1,21 +1,21 @@
 //
 // json.hpp
-// shared-foundation-cpp
+// foundation-cpp
 //
 // Created by Kristian Trenskow on 2020/04/01.
 // See license in LICENSE.
 //
 
-#ifndef shared_foundation_json_hpp
-#define shared_foundation_json_hpp
+#ifndef foundation_json_hpp
+#define foundation_json_hpp
 
 #include "../memory/object.hpp"
 #include "../types/string.hpp"
 
-using namespace games::zerobit::shared::foundation::memory;
-using namespace games::zerobit::shared::foundation::types;
+using namespace foundation::memory;
+using namespace foundation::types;
 
-namespace games::zerobit::shared::foundation::serialization {
+namespace foundation::serialization {
 
 	class JSON: public Object {
 
@@ -108,4 +108,4 @@ namespace games::zerobit::shared::foundation::serialization {
 
 }
 
-#endif /* shared_foundation_json_hpp */
+#endif /* foundation_json_hpp */

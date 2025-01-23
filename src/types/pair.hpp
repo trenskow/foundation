@@ -1,16 +1,16 @@
 
 //
 // pair.hpp
-// shared-foundation-cpp
+// foundation-cpp
 //
 // Created by Kristian Trenskow on 2021/01/24.
 // See license in LICENSE.
 //
 
-#ifndef shared_foundation_pair_hpp
-#define shared_foundation_pair_hpp
+#ifndef foundation_pair_hpp
+#define foundation_pair_hpp
 
-namespace games::zerobit::shared::foundation::types {
+namespace foundation::types {
 
 	template<typename First, typename Second>
 	class Pair: public Type {
@@ -79,4 +79,4 @@ namespace games::zerobit::shared::foundation::types {
 
 }
 
-#endif /* shared_foundation_pair_hpp */
+#endif /* foundation_pair_hpp */

@@ -12,10 +12,10 @@
 #include "../exceptions/exception.hpp"
 #include "../tools/math.hpp"
 
-using namespace games::zerobit::shared::foundation::exceptions;
-using namespace games::zerobit::shared::foundation::tools;
+using namespace foundation::exceptions;
+using namespace foundation::tools;
 
-namespace games::zerobit::shared::foundation::types {
+namespace foundation::types {
 
 	class Hashable {
 

@@ -1,19 +1,19 @@
 //
 // math.hpp
-// shared-foundation-cpp
+// foundation-cpp
 //
 // Created by Kristian Trenskow on 2020/04/05.
 // See license in LICENSE.
 //
 
-#ifndef shared_foundation_math_hpp
-#define shared_foundation_math_hpp
+#ifndef foundation_math_hpp
+#define foundation_math_hpp
 
 #include <type_traits>
 
 #include <string.h>
 
-namespace games::zerobit::shared::foundation::tools {
+namespace foundation::tools {
 
 	namespace math {
 
@@ -44,4 +44,4 @@ namespace games::zerobit::shared::foundation::tools {
 
 }
 
-#endif /* shared_foundation_math_hpp */
+#endif /* foundation_math_hpp */

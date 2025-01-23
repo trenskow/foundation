@@ -1,13 +1,13 @@
 //
 // array.hpp
-// shared-foundation-cpp
+// foundation-cpp
 //
 // Created by Kristian Trenskow on 2018/09/04.
 // See license in LICENSE.
 //
 
-#ifndef shared_foundation_array_hpp
-#define shared_foundation_array_hpp
+#ifndef foundation_array_hpp
+#define foundation_array_hpp
 
 #include <type_traits>
 #include <functional>
@@ -17,10 +17,10 @@
 #include "./comparable.hpp"
 #include "./data.hpp"
 
-using namespace games::zerobit::shared::foundation::memory;
-using namespace games::zerobit::shared::foundation::exceptions::types;
+using namespace foundation::memory;
+using namespace foundation::exceptions::types;
 
-namespace games::zerobit::shared::foundation::types {
+namespace foundation::types {
 
 	template<typename T>
 	class Data;
@@ -637,4 +637,4 @@ namespace games::zerobit::shared::foundation::types {
 
 }
 
-#endif /* shared_foundation_array_hpp */
+#endif /* foundation_array_hpp */

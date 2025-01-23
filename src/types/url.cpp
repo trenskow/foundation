@@ -1,6 +1,6 @@
 //
 // url.cpp
-// shared-foundation-cpp
+// foundation-cpp
 //
 // Created by Kristian Trenskow on 2025/01/23.
 // See license in LICENSE.
@@ -8,7 +8,7 @@
 
 #include "url.hpp"
 
-using namespace games::zerobit::shared::foundation::types;
+using namespace foundation::types;
 
 String URL::escapeDecode(
 	const String& string

@@ -1,21 +1,21 @@
 //
 // environment.hpp
-// shared-foundation-cpp
+// foundation-cpp
 //
 // Created by Kristian Trenskow on 2021/01/16.
 // See license in LICENSE.
 //
 
-#ifndef shared_foundation_environment_hpp
-#define shared_foundation_environment_hpp
+#ifndef foundation_environment_hpp
+#define foundation_environment_hpp
 
 #include <stdlib.h>
 
 #include "../types/string.hpp"
 
-using namespace games::zerobit::shared::foundation::types;
+using namespace foundation::types;
 
-namespace games::zerobit::shared::foundation::system {
+namespace foundation::system {
 
 	class Environment {
 
@@ -27,4 +27,4 @@ namespace games::zerobit::shared::foundation::system {
 
 }
 
-#endif /* shared_foundation_environment_hpp */
+#endif /* foundation_environment_hpp */

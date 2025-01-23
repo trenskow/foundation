@@ -1,13 +1,13 @@
 //
 // number.hpp
-// shared-foundation-cpp
+// foundation-cpp
 //
 // Created by Kristian Trenskow on 2018/09/09.
 // See license in LICENSE.
 //
 
-#ifndef shared_foundation_number_hpp
-#define shared_foundation_number_hpp
+#ifndef foundation_number_hpp
+#define foundation_number_hpp
 
 #include <type_traits>
 #include <limits>
@@ -16,7 +16,7 @@
 #include "./comparable.hpp"
 #include "./string.hpp"
 
-namespace games::zerobit::shared::foundation::types {
+namespace foundation::types {
 
 	class Numeric : public Type {
 
@@ -216,4 +216,4 @@ namespace games::zerobit::shared::foundation::types {
 
 }
 
-#endif /* shared_foundation_number_hpp */
+#endif /* foundation_number_hpp */

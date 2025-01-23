@@ -1,6 +1,6 @@
 //
 // json.cpp
-// shared-foundation-cpp
+// foundation-cpp
 //
 // Created by Kristian Trenskow on 2025/01/22.
 // See license in LICENSE.
@@ -19,8 +19,8 @@
 
 #include "./json.hpp"
 
-using namespace games::zerobit::shared::foundation::serialization;
-using namespace games::zerobit::shared::foundation::exceptions::serialization;
+using namespace foundation::serialization;
+using namespace foundation::exceptions::serialization;
 
 bool JSON::_hasLength(
 	const String& string,

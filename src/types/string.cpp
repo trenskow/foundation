@@ -1,6 +1,6 @@
 //
 // string.cpp
-// shared-foundation-cpp
+// foundation-cpp
 //
 // Created by Kristian Trenskow on 2025/01/22.
 // See license in LICENSE.
@@ -8,7 +8,7 @@
 
 #include "string.hpp"
 
-using namespace games::zerobit::shared::foundation::types;
+using namespace foundation::types;
 
 Type::Kind String::typeKind() {
 	return Type::Kind::string;

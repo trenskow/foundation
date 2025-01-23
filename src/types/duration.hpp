@@ -1,19 +1,19 @@
 // duration.hpp
-// shared-foundation-cpp
+// foundation-cpp
 //
 // Created by Kristian Trenskow on 2020/04/04.
 // See license in LICENSE.
 //
 
-#ifndef shared_foundation_duration_hpp
-#define shared_foundation_duration_hpp
+#ifndef foundation_duration_hpp
+#define foundation_duration_hpp
 
 #include <math.h>
 
 #include "./string.hpp"
 #include "./comparable.hpp"
 
-namespace games::zerobit::shared::foundation::types {
+namespace foundation::types {
 
 	class Duration : public Comparable<Duration> {
 
@@ -75,4 +75,4 @@ namespace games::zerobit::shared::foundation::types {
 
 }
 
-#endif /* shared_foundation_duration_hpp */
+#endif /* foundation_duration_hpp */

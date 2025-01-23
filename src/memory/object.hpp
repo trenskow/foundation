@@ -1,20 +1,20 @@
 //
 // object.hpp
-// shared-foundation-cpp
+// foundation-cpp
 //
 // Created by Kristian Trenskow on 2018/08/17.
 // See license in LICENSE.
 //
 
-#ifndef shared_foundation_object_hpp
-#define shared_foundation_object_hpp
+#ifndef foundation_object_hpp
+#define foundation_object_hpp
 
 #include <unistd.h>
 #include <atomic>
 
 #include "./allocator.hpp"
 
-namespace games::zerobit::shared::foundation::memory {
+namespace foundation::memory {
 
 	class Object : public Allocator {
 
@@ -64,4 +64,4 @@ namespace games::zerobit::shared::foundation::memory {
 
 }
 
-#endif /* shared_foundation_object_hpp */
+#endif /* foundation_object_hpp */

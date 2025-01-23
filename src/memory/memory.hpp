@@ -1,16 +1,16 @@
 //
 // memory.hpp
-// shared-foundation-cpp
+// foundation-cpp
 //
 // Created by Kristian Trenskow on 2019/12/12.
 // See license in LICENSE.
 //
 
-#ifndef shared_foundation_memory_hpp
-#define shared_foundation_memory_hpp
+#ifndef foundation_memory_hpp
+#define foundation_memory_hpp
 
 #include "./object.hpp"
 #include "./strong.hpp"
 #include "./weak.hpp"
 
-#endif /* shared_foundation_memory_hpp */
+#endif /* foundation_memory_hpp */

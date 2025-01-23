@@ -1,18 +1,18 @@
 //
 // endian.hpp
-// shared-foundation-cpp
+// foundation-cpp
 //
 // Created by Kristian Trenskow on 2020/04/01.
 // See license in LICENSE.
 //
 
-#ifndef shared_foundation_endian_hpp
-#define shared_foundation_endian_hpp
+#ifndef foundation_endian_hpp
+#define foundation_endian_hpp
 
 #include <stdlib.h>
 #include <stdint.h>
 
-namespace games::zerobit::shared::foundation::system {
+namespace foundation::system {
 
 	class Endian {
 
@@ -58,4 +58,4 @@ namespace games::zerobit::shared::foundation::system {
 
 }
 
-#endif /* shared_foundation_endian_hpp */
+#endif /* foundation_endian_hpp */

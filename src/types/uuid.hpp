@@ -1,17 +1,17 @@
 //
 // uuid.hpp
-// shared-foundation-cpp
+// foundation-cpp
 //
 // Created by Kristian Trenskow on 2022/08/28.
 // See license in LICENSE.
 //
 
-#ifndef shared_foundation_uuid_hpp
-#define shared_foundation_uuid_hpp
+#ifndef foundation_uuid_hpp
+#define foundation_uuid_hpp
 
 #include "./type.hpp"
 
-namespace games::zerobit::shared::foundation::types {
+namespace foundation::types {
 
 	class UUID : public Type {
 
@@ -65,4 +65,4 @@ namespace games::zerobit::shared::foundation::types {
 
 }
 
-#endif /* shared_foundation_uuid_hpp */
+#endif /* foundation_uuid_hpp */

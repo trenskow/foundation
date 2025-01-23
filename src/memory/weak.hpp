@@ -1,20 +1,20 @@
 //
 // weak.hpp
-// shared-foundation-cpp
+// foundation-cpp
 //
 // Created by Kristian Trenskow on 2018/09/04.
 // See license in LICENSE.
 //
 
-#ifndef shared_foundation_weak_hpp
-#define shared_foundation_weak_hpp
+#ifndef foundation_weak_hpp
+#define foundation_weak_hpp
 
 #include <type_traits>
 #include <atomic>
 
 #include "./allocator.hpp"
 
-namespace games::zerobit::shared::foundation::memory {
+namespace foundation::memory {
 
 	class Object;
 
@@ -118,4 +118,4 @@ namespace games::zerobit::shared::foundation::memory {
 
 }
 
-#endif /* shared_foundation_weak_hpp */
+#endif /* foundation_weak_hpp */

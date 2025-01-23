@@ -1,13 +1,13 @@
 //
 // data.hpp
-// shared-foundation-cpp
+// foundation-cpp
 //
 // Created by Kristian Trenskow on 2018/08/17.
 // See license in LICENSE.
 //
 
-#ifndef shared_foundation_data_hpp
-#define shared_foundation_data_hpp
+#ifndef foundation_data_hpp
+#define foundation_data_hpp
 
 #include <stdlib.h>
 #include <string.h>
@@ -20,11 +20,11 @@
 
 #define MAX(x, y) (x > y ? x : y)
 
-using namespace games::zerobit::shared::foundation::memory;
-using namespace games::zerobit::shared::foundation::exceptions::types;
-using namespace games::zerobit::shared::foundation::tools;
+using namespace foundation::memory;
+using namespace foundation::exceptions::types;
+using namespace foundation::tools;
 
-namespace games::zerobit::shared::foundation::types {
+namespace foundation::types {
 
 	class String;
 
@@ -835,4 +835,4 @@ namespace games::zerobit::shared::foundation::types {
 
 }
 
-#endif /* shared_foundation_data_hpp */
+#endif /* foundation_data_hpp */

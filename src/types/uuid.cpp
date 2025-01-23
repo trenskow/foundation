@@ -1,6 +1,6 @@
 //
 // uuid.cpp
-// shared-foundation-cpp
+// foundation-cpp
 //
 // Created by Kristian Trenskow on 2022/08/28.
 // See license in LICENSE.
@@ -16,7 +16,7 @@
 #define RANDOM() random()
 #endif
 
-using namespace games::zerobit::shared::foundation::types;
+using namespace foundation::types;
 
 Type::Kind UUID::typeKind() {
 	return Type::Kind::uuid;

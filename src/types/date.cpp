@@ -1,6 +1,6 @@
 //
 // date.cpp
-// shared-foundation-cpp
+// foundation-cpp
 //
 // Created by Kristian Trenskow on 2025/01/22.
 // See license in LICENSE.
@@ -8,7 +8,7 @@
 
 #include "date.hpp"
 
-using namespace games::zerobit::shared::foundation::types;
+using namespace foundation::types;
 
 Type::Kind Date::typeKind() {
 	return Type::Kind::date;

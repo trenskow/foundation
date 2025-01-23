@@ -1,13 +1,13 @@
 //
 // string.hpp
-// shared-foundation-cpp
+// foundation-cpp
 //
 // Created by Kristian Trenskow on 2018/08/17.
 // See license in LICENSE.
 //
 
-#ifndef shared_foundation_string_hpp
-#define shared_foundation_string_hpp
+#ifndef foundation_string_hpp
+#define foundation_string_hpp
 
 #include <stdio.h>
 #include <stdarg.h>
@@ -21,11 +21,11 @@
 #include "./array.hpp"
 #include "./unicode.hpp"
 
-using namespace games::zerobit::shared::foundation::system;
-using namespace games::zerobit::shared::foundation::memory;
-using namespace games::zerobit::shared::foundation::exceptions;
+using namespace foundation::system;
+using namespace foundation::memory;
+using namespace foundation::exceptions;
 
-namespace games::zerobit::shared::foundation::types {
+namespace foundation::types {
 
 	static const uint8_t _bigEndianBOM[] = { 0xFE, 0xFF };
 	static const uint8_t _littleEndianBOM[] = { 0xFF, 0xFE };
@@ -311,4 +311,4 @@ namespace games::zerobit::shared::foundation::types {
 
 }
 
-#endif /* shared_foundation_string_hpp */
+#endif /* foundation_string_hpp */

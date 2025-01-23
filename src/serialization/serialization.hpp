@@ -1,14 +1,14 @@
 //
 // serialization.hpp
-// shared-foundation-cpp
+// foundation-cpp
 //
 // Created by Kristian Trenskow on 2020/04/03.
 // See license in LICENSE.
 //
 
-#ifndef shared_foundation_serialization_hpp
-#define shared_foundation_serialization_hpp
+#ifndef foundation_serialization_hpp
+#define foundation_serialization_hpp
 
 #include "json.hpp"
 
-#endif /* shared_foundation_serialization_hpp */
+#endif /* foundation_serialization_hpp */

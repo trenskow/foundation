@@ -1,20 +1,20 @@
 //
 // dictionary.hpp
-// shared-foundation-cpp
+// foundation-cpp
 //
 // Created by Kristian Trenskow on 2018/09/09.
 // See license in LICENSE.
 //
 
-#ifndef shared_foundation_dictionary_hpp
-#define shared_foundation_dictionary_hpp
+#ifndef foundation_dictionary_hpp
+#define foundation_dictionary_hpp
 
 #include <thread>
 #include "./array.hpp"
 #include "./pair.hpp"
 #include "./type.hpp"
 
-namespace games::zerobit::shared::foundation::types {
+namespace foundation::types {
 
 	template<typename Key, class Value = Type>
 	class Dictionary : public Type {
@@ -281,4 +281,4 @@ namespace games::zerobit::shared::foundation::types {
 
 }
 
-#endif /* shared_foundation_dictionary_hpp */
+#endif /* foundation_dictionary_hpp */

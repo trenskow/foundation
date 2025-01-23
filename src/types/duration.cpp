@@ -1,5 +1,5 @@
 // duration.cpp
-// shared-foundation-cpp
+// foundation-cpp
 //
 // Created by Kristian Trenskow on 2025/01/22.
 // See license in LICENSE.
@@ -7,7 +7,7 @@
 
 #include "duration.hpp"
 
-using namespace games::zerobit::shared::foundation::types;
+using namespace foundation::types;
 
 const Duration& Duration::zero() {
 	static const Duration zero = 0;

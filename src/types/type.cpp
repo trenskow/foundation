@@ -1,6 +1,6 @@
 //
 // type.cpp
-// shared-foundation-cpp
+// foundation-cpp
 //
 // Created by Kristian Trenskow on 2018/09/10.
 // See license in LICENSE.
@@ -10,7 +10,7 @@
 
 #include "type.hpp"
 
-using namespace games::zerobit::shared::foundation::types;
+using namespace foundation::types;
 
 Type::Type() : Object(), Hashable() { }
 

@@ -1,20 +1,20 @@
 //
 // exception.hpp
-// shared-foundation-cpp
+// foundation-cpp
 //
 // Created by Kristian Trenskow on 2018/08/17.
 // See license in LICENSE.
 //
 
-#ifndef shared_foundation_exception_hpp
-#define shared_foundation_exception_hpp
+#ifndef foundation_exception_hpp
+#define foundation_exception_hpp
 
 #include <stdlib.h>
 #include <string.h>
 #include <stdint.h>
 #include <sys/types.h>
 
-namespace games::zerobit::shared::foundation::exceptions {
+namespace foundation::exceptions {
 
 	class Exception {
 	public:
@@ -338,4 +338,4 @@ namespace games::zerobit::shared::foundation::exceptions {
 
 }
 
-#endif /* shared_foundation_exception_hpp */
+#endif /* foundation_exception_hpp */

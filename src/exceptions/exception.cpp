@@ -1,6 +1,6 @@
 //
 // exception.cpp
-// shared-foundation-cpp
+// foundation-cpp
 //
 // Created by Kristian Trenskow on 2025/01/22.
 // See license in LICENSE.
@@ -10,7 +10,7 @@
 
 #include "./exception.hpp"
 
-using namespace games::zerobit::shared::foundation::exceptions;
+using namespace foundation::exceptions;
 
 NotImplementedException::NotImplementedException()  {
 #ifdef DEBUG

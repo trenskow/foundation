@@ -1,15 +1,15 @@
 //
 // unicode.hpp
-// shared-foundation-cpp
+// foundation-cpp
 //
 // Created by Kristian Trenskow on 2021/07/09.
 // See license in LICENSE.
 //
 
-#ifndef shared_foundation_unicode_hpp
-#define shared_foundation_unicode_hpp
+#ifndef foundation_unicode_hpp
+#define foundation_unicode_hpp
 
-namespace games::zerobit::shared::foundation::types {
+namespace foundation::types {
 
 	class Unicode {
 
@@ -28,4 +28,4 @@ namespace games::zerobit::shared::foundation::types {
 
 }
 
-#endif /* shared_foundation_unicode_hpp */
+#endif /* foundation_unicode_hpp */

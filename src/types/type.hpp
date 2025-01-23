@@ -1,13 +1,13 @@
 //
 // type.hpp
-// shared-foundation-cpp
+// foundation-cpp
 //
 // Created by Kristian Trenskow on 2018/09/10.
 // See license in LICENSE.
 //
 
-#ifndef shared_foundation_type_hpp
-#define shared_foundation_type_hpp
+#ifndef foundation_type_hpp
+#define foundation_type_hpp
 
 #include <stdint.h>
 
@@ -16,11 +16,11 @@
 #include "../exceptions/exception.hpp"
 #include "../tools/math.hpp"
 
-using namespace games::zerobit::shared::foundation::memory;
-using namespace games::zerobit::shared::foundation::exceptions::types;
-using namespace games::zerobit::shared::foundation::tools;
+using namespace foundation::memory;
+using namespace foundation::exceptions::types;
+using namespace foundation::tools;
 
-namespace games::zerobit::shared::foundation::types {
+namespace foundation::types {
 
 	static const size_t NotFound = math::limit<size_t>();
 
@@ -87,4 +87,4 @@ namespace games::zerobit::shared::foundation::types {
 
 }
 
-#endif /* shared_foundation_type_hpp */
+#endif /* foundation_type_hpp */

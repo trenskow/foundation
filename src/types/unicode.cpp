@@ -1,6 +1,6 @@
 //
 // unicode.cpp
-// shared-foundation-cpp
+// foundation-cpp
 //
 // Created by Kristian Trenskow on 2025/01/22.
 // See license in LICENSE.
@@ -205,7 +205,7 @@ static uint16_t _whitespaceCharacters[] = {
 
 static const size_t _whitespaceCharactersCount = sizeof(_whitespaceCharacters) / sizeof(uint16_t);
 
-using namespace games::zerobit::shared::foundation::types;
+using namespace foundation::types;
 
 uint32_t Unicode::lowerToUpper(
 	const uint32_t lower

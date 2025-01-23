@@ -1,15 +1,15 @@
 //
 // comparison.hpp
-// shared-foundation-cpp
+// foundation-cpp
 //
 // Created by Kristian Trenskow on 2023/01/21.
 // See license in LICENSE.
 //
 
-#ifndef shared_foundation_comparison_hpp
-#define shared_foundation_comparison_hpp
+#ifndef foundation_comparison_hpp
+#define foundation_comparison_hpp
 
-namespace games::zerobit::shared::foundation::types {
+namespace foundation::types {
 
 	enum class Comparison : int8_t {
 		lessThan = -1,
@@ -19,4 +19,4 @@ namespace games::zerobit::shared::foundation::types {
 
 };
 
-#endif /* shared_foundation_comparison_hpp */
+#endif /* foundation_comparison_hpp */

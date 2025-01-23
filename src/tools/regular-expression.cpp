@@ -1,6 +1,6 @@
 //
 // regular-expression.cpp
-// shared-foundation-cpp
+// foundation-cpp
 //
 // Created by Kristian Trenskow on 2025/01/22.
 // See license in LICENSE.
@@ -10,8 +10,8 @@
 
 #include "regular-expression.hpp"
 
-using namespace games::zerobit::shared::foundation::tools;
-using namespace games::zerobit::shared::foundation::exceptions::tools;
+using namespace foundation::tools;
+using namespace foundation::exceptions::tools;
 
 RegularExpression::RegularExpression(
 	const String& pattern

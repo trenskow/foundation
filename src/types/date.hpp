@@ -1,13 +1,13 @@
 //
 // date.hpp
-// shared-foundation-cpp
+// foundation-cpp
 //
 // Created by Kristian Trenskow on 2020/04/03.
 // See license in LICENSE.
 //
 
-#ifndef shared_foundation_date_hpp
-#define shared_foundation_date_hpp
+#ifndef foundation_date_hpp
+#define foundation_date_hpp
 
 #include <time.h>
 #include <sys/time.h>
@@ -16,9 +16,9 @@
 #include "./comparable.hpp"
 #include "./duration.hpp"
 
-using namespace games::zerobit::shared::foundation::exceptions::types;
+using namespace foundation::exceptions::types;
 
-namespace games::zerobit::shared::foundation::types {
+namespace foundation::types {
 
 	class Date : public Type, public Comparable<Date> {
 
@@ -187,4 +187,4 @@ namespace games::zerobit::shared::foundation::types {
 
 }
 
-#endif /* shared_foundation_date_hpp */
+#endif /* foundation_date_hpp */

@@ -1,15 +1,15 @@
 //
 // allocator.hpp
-// shared-foundation-cpp
+// foundation-cpp
 //
 // Created by Kristian Trenskow on 2021/07/19.
 // See license in LICENSE.
 //
 
-#ifndef shared_foundation_allocator_hpp
-#define shared_foundation_allocator_hpp
+#ifndef foundation_allocator_hpp
+#define foundation_allocator_hpp
 
-namespace games::zerobit::shared::foundation::memory {
+namespace foundation::memory {
 
 	class Allocator {
 
@@ -43,4 +43,4 @@ namespace games::zerobit::shared::foundation::memory {
 
 }
 
-#endif /* shared_foundation_allocator_hpp */
+#endif /* foundation_allocator_hpp */

@@ -1,6 +1,6 @@
 //
 // null.cpp
-// shared-foundation-cpp
+// foundation-cpp
 //
 // Created by Kristian Trenskow on 2025/01/22.
 // See license in LICENSE.
@@ -8,7 +8,7 @@
 
 #include "null.hpp"
 
-using namespace games::zerobit::shared::foundation::types;
+using namespace foundation::types;
 
 bool Null::is(const Type* value) {
 	return value == nullptr || value->kind() == Type::Kind::null;

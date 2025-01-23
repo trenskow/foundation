@@ -1,6 +1,6 @@
 //
 // endian.cpp
-// shared-foundation-cpp
+// foundation-cpp
 //
 // Created by Kristian Trenskow on 2025/01/22.
 // See license in LICENSE.
@@ -8,7 +8,7 @@
 
 #include "./endian.hpp"
 
-using namespace games::zerobit::shared::foundation::system;
+using namespace foundation::system;
 
 Endian::Variant Endian::systemVariant() {
 	static const uint32_t test = 0x00000001;
