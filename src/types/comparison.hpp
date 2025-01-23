@@ -1,15 +1,15 @@
 //
 // comparison.hpp
-// fart
+// shared-foundation-cpp
 //
 // Created by Kristian Trenskow on 2023/01/21.
 // See license in LICENSE.
 //
 
-#ifndef comparison_hpp
-#define comparison_hpp
+#ifndef shared_foundation_comparison_hpp
+#define shared_foundation_comparison_hpp
 
-namespace fart::types {
+namespace games::zerobit::shared::foundation::types {
 
 	enum class Comparison : int8_t {
 		lessThan = -1,
@@ -19,4 +19,4 @@ namespace fart::types {
 
 };
 
-#endif /* comparison_hpp */
+#endif /* shared_foundation_comparison_hpp */

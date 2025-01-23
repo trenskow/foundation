@@ -1,13 +1,13 @@
 //
 // string.hpp
-// fart
+// shared-foundation-cpp
 //
 // Created by Kristian Trenskow on 2018/08/17.
 // See license in LICENSE.
 //
 
-#ifndef string_hpp
-#define string_hpp
+#ifndef shared_foundation_string_hpp
+#define shared_foundation_string_hpp
 
 #include <stdio.h>
 #include <stdarg.h>
@@ -21,11 +21,11 @@
 #include "./array.hpp"
 #include "./unicode.hpp"
 
-using namespace fart::system;
-using namespace fart::memory;
-using namespace fart::exceptions;
+using namespace games::zerobit::shared::foundation::system;
+using namespace games::zerobit::shared::foundation::memory;
+using namespace games::zerobit::shared::foundation::exceptions;
 
-namespace fart::types {
+namespace games::zerobit::shared::foundation::types {
 
 	static const uint8_t _bigEndianBOM[] = { 0xFE, 0xFF };
 	static const uint8_t _littleEndianBOM[] = { 0xFF, 0xFE };
@@ -37,370 +37,200 @@ namespace fart::types {
 
 	public:
 
-		static Type::Kind typeKind() {
-			return Type::Kind::string;
-		}
+		static Type::Kind typeKind();
 
-		String() : String(Data<uint32_t>()) {}
-
-		String(const char* string) noexcept(false) : String() {
-			if (string != nullptr) {
-				_storage.append(_decodeUTF8((const uint8_t*)string, strlen(string)));
-			}
-		}
-
-		String(const Data<uint8_t>& data) noexcept(false) : String() {
-			_storage.append(_decodeUTF8(data.items(), _lengthWithoutNullTerminator<uint8_t>(data)));
-		}
-
-		String(const Data<uint16_t>& data, const Endian::Variant& endian) noexcept(false) : String() {
-			_storage.append(_decodeUTF16(data.items(), _lengthWithoutNullTerminator<uint16_t>(data), endian));
-		}
-
-		String(const Data<uint16_t>& data) noexcept(false) : String() {
-			Strong<Data<uint16_t>> parseData(data);
-			Endian::Variant endian = Endian::Variant::big;
-			if (data.length() > 1) {
-				Strong<Data<uint8_t>> potentialMarker = data.subdata(0, 2)->as<uint8_t>();
-				if (*potentialMarker == bigEndianBOM || *potentialMarker == littleEndianBOM) {
-					endian = *potentialMarker == bigEndianBOM ? Endian::Variant::big : Endian::Variant::little;
-					parseData = parseData->subdata(2);
-				}
-			}
-			_storage.append(_decodeUTF16(parseData->items(), parseData->length(), endian));
-		}
-
-		String(const Data<uint32_t>& store) : _storage(store) {}
-
-		String(const uint32_t character) : _storage(&character, 1) {}
-
-		String(const String& other) : String(other._storage) {}
-
-		String(String&& other) : _storage(std::move(other._storage)) { }
-
-		inline static String fromCString(function<size_t(char*,size_t)> todo, const size_t size) {
-			return String(Data<uint8_t>::fromCBuffer([&todo](void* buffer, size_t length) {
-				return todo((char*)buffer, length);
-			}, size));
-		}
-
-		virtual ~String() {}
+		static String fromCString(
+			function<size_t(char*,size_t)> todo,
+			const size_t size);
 
 		static
 		__attribute__ ((format (printf, 1, 0)))
-		String format(const char* format, ...) {
+		String format(const char* format, ...);
 
-			va_list args;
+		static Strong<String> fromHex(
+			const Data<uint8_t>& data);
 
-			va_start(args, format);
+		static Strong<String> join(
+			const Array<String>& strings);
 
-			size_t size = vsnprintf(nullptr, 0, format, args) + 1;
+		static Strong<String> join(
+			const Array<String>& strings,
+			const String& separator);
 
-			va_end(args);
+		String();
 
-			va_start(args, format);
+		String(
+			const char* string
+		) noexcept(false);
 
-			char buffer[size];
+		String(
+			const Data<uint8_t>& data
+		) noexcept(false);
 
-			vsnprintf(buffer, size, format, args);
+		String(
+			const Data<uint16_t>& data,
+			const Endian::Variant& endian
+		) noexcept(false);
 
-			va_end(args);
+		String(
+			const Data<uint16_t>& data
+		) noexcept(false);
 
-			return String((const char*)buffer);
+		String(
+			const Data<uint32_t>& store);
 
-		}
+		String(
+			const uint32_t character);
 
-		inline size_t length() const {
-			return _storage.length();
-		}
+		String(
+			const String& other);
+
+		String(
+			String&& other);
+
+		virtual ~String();
+
+		size_t length() const;
 
 		template<typename T>
-		inline T mapCString(const function<T(const char*)>& todo) const {
+		T mapCString(
+			const function<T(const char*)>& todo
+		) const {
 			return todo((const char*)this->UTF8Data(true)->items());
 		}
 
-		inline void withCString(const function<void(const char*)>& todo) const {
-			todo((const char*)this->UTF8Data(true)->items());
-		}
+		void withCString(
+			const function<void(const char*)>& todo
+		) const;
 
 		template<typename T>
-		inline T withCString(function<T(const char*)> todo) const {
+		T withCString(
+			function<T(const char*)> todo
+		) const {
 			return todo((const char*)this->UTF8Data(true)->items());
 		}
 
-		inline void print(bool newLine = true) const {
-			this->appending(newLine ? "\n" : "")->withCString(printf);
-		}
-
-		inline Strong<Data<uint8_t>> UTF8Data(bool nullTerminate = false) const {
-			return _encodeUTF8(_storage, nullTerminate);
-		}
-
-		inline Strong<Data<uint16_t>> UTF16Data(Endian::Variant endian = Endian::systemVariant(), bool includeBOM = false) const {
-			return _encodeUTF16(_storage, endian, includeBOM);
-		}
-
-		inline Strong<Data<uint32_t>> UTF32Data() const {
-			return Strong<Data<uint32_t>>(this->_storage);
-		}
-
-		inline static Strong<String> fromHex(const Data<uint8_t>& data) {
-			return Strong<String>(_decodeHex(data));
-		}
-
-		inline Strong<Data<uint8_t>> hexData() const {
-			return _encodeHex(_storage);
-		}
-
-		inline void append(const String& other) {
-			_storage.append(other._storage);
-		}
-
-		inline void append(uint32_t character) {
-			_storage.append(character);
-		}
-
-		inline Strong<String> appending(const String& other) const {
-			return String(this->_storage.appending(other._storage));
-		}
-
-		inline Strong<Array<String>> split() const {
-			return _storage.split()->map<String>([](Data<uint32_t>& data) {
-				return Strong<String>(data);
-			});
-		}
-
-		inline Strong<Array<String>> split(const String& separator, IncludeSeparator includeSeparator = IncludeSeparator::none, size_t max = 0) const {
-			return _storage.split(separator._storage, includeSeparator, max)->map<String>([](const Data<uint32_t>& current) {
-				return Strong<String>(current);
-			});
-		}
-
-		Strong<Array<String>> split(const Array<String>& separators, IncludeSeparator includeSeparator = IncludeSeparator::none, size_t max = 0) const {
-			auto stores = separators.map<Data<uint32_t>>([](const String& current) {
-				return current._storage;
-			});
-			return _storage.split(stores, includeSeparator, max)->map<String>([](const Data<uint32_t>& current) {
-				return Strong<String>(current);
-			});
-		}
-
-		inline static Strong<String> join(const Array<String>& strings) {
-			return Strong<String>(Data<uint32_t>::join(strings.map<Data<uint32_t>>([](const String& current) {
-				return current._storage;
-			})));
-		}
-
-		inline static Strong<String> join(const Array<String>& strings, const String& separator) {
-			return Strong<String>(Data<uint32_t>::join(strings.map<Data<uint32_t>>([](const String& current) {
-				return current._storage;
-			}), separator._storage));
-		}
-
-		Strong<String> replacing(const String& needle, const String& replacement) const {
-			return String::join(this->split(needle), replacement);
-		}
-
-		double doubleValue(size_t startIndex = 0, size_t* consumed = nullptr, bool allowLeadingZero = true) const {
-
-			double integerMultiplier = 1;
-			bool integerMultiplierParsed = false;
-			bool integerHadLeadingZero = false;
-			bool integerHadDigits = false;
-			size_t integerStartIndex = NotFound;
-			double fractionMultiplier = 10;
-			bool fractionHadDigits = false;
-			size_t fractionStartIndex = NotFound;
-			double exponentMultiplier = 1;
-			bool exponentMultiplierParsed = false;
-			bool exponentHadDigits = false;
-			size_t exponentStartIndex = NotFound;
-
-			double integer = 0;
-			double fraction = 0;
-			double exponent = 0;
-
-			size_t idx = startIndex;
-			while (idx < length()) {
-
-				uint32_t chr = _storage[idx];
-
-				if (chr == '+' || chr == '-') {
-
-					if (fractionStartIndex != NotFound && exponentStartIndex == NotFound) throw DecoderException(idx);
-					if (exponentStartIndex == NotFound && integerMultiplierParsed) throw DecoderException(idx);
-					if (exponentStartIndex != NotFound && exponentMultiplierParsed) throw DecoderException(idx);
+		void print(
+			bool newLine = true
+		) const;
 
-					if (exponentStartIndex != NotFound) {
-						if (exponentHadDigits) throw DecoderException(idx);
-						exponentMultiplier = chr == '+' ? 1 : -1;
-						exponentMultiplierParsed = true;
-					}
-					else {
-						if (integerHadDigits) throw DecoderException(idx);
-						integerMultiplier = chr == '+' ? 1 : -1;
-						integerMultiplierParsed = true;
-					}
-
-				}
+		Strong<Data<uint8_t>> UTF8Data(
+			bool nullTerminate = false
+		) const;
 
-				else if (chr == '.') {
-					if (!integerHadDigits) throw DecoderException(idx);
-					if (exponentStartIndex != NotFound || fractionStartIndex != NotFound) throw DecoderException(idx);
-					fractionStartIndex = idx;
-				}
+		Strong<Data<uint16_t>> UTF16Data(
+			Endian::Variant endian = Endian::systemVariant(),
+			bool includeBOM = false
+		) const;
 
-				else if (chr == 'e' || chr == 'E') {
-					if (exponentStartIndex != NotFound) throw DecoderException(idx);
-					exponentStartIndex = idx;
-				}
+		Strong<Data<uint32_t>> UTF32Data() const;
 
-				else if (chr >= '0' && chr <= '9') {
+		Strong<Data<uint8_t>> hexData() const;
 
-					if (exponentStartIndex != NotFound && !exponentHadDigits) exponentHadDigits = true;
-					else if (fractionStartIndex != NotFound && !fractionHadDigits) fractionHadDigits = true;
-					else if (!integerHadDigits) {
-						integerHadDigits = true;
-						integerHadLeadingZero = chr == '0';
-					}
+		void append(
+			const String& other);
 
-					double value = chr - '0';
+		void append(
+			uint32_t character);
 
-					if (exponentStartIndex != NotFound) {
-						exponent = exponent * 10 + value;
-					} else if (fractionStartIndex != NotFound) {
-						fraction = fraction + (value / fractionMultiplier);
-						fractionMultiplier *= 10;
-					} else {
-						integer = integer * 10 + value;
-					}
+		Strong<String> appending(
+			const String& other
+		) const;
 
-				} else {
-					break;
-				}
+		Strong<Array<String>> split() const;
 
-				idx++;
+		Strong<Array<String>> split(
+			const String& separator,
+			IncludeSeparator includeSeparator = IncludeSeparator::none,
+			size_t max = 0
+		) const;
 
-			}
+		Strong<Array<String>> split(
+			const Array<String>& separators,
+			IncludeSeparator includeSeparator = IncludeSeparator::none,
+			size_t max = 0
+		) const;
 
-			if (consumed != nullptr) *consumed = idx - startIndex;
+		Strong<String> replacing(
+			const String& needle,
+			const String& replacement
+		) const;
 
-			if (exponentStartIndex != NotFound && !exponentHadDigits) throw DecoderException(exponentStartIndex);
-			if (fractionStartIndex != NotFound && !fractionHadDigits) throw DecoderException(fractionStartIndex);
-			if (!integerHadDigits) throw DecoderException(startIndex);
+		double doubleValue(
+			size_t startIndex = 0,
+			size_t* consumed = nullptr,
+			bool allowLeadingZero = true
+		) const noexcept(false);
 
-			double result = ((integer * integerMultiplier) + fraction) * (pow(10, exponent) * exponentMultiplier);
+		size_t indexOf(
+			const String& other,
+			size_t offset = 0
+		) const;
 
-			if (!allowLeadingZero && integer != 0 && integerHadLeadingZero) throw DecoderException(integerStartIndex);
+		size_t indexOf(
+			uint32_t chr
+		) const;
 
-			return result;
+		size_t lastIndexOf(
+			const String& other
+		) const;
 
-		}
+		bool contains(
+			const String& other
+		) const;
 
-		inline size_t indexOf(const String& other, size_t offset = 0) const {
-			return this->_storage.indexOf(other._storage, offset);
-		}
+		bool hasPrefix(
+			const String& other
+		) const;
 
-		inline size_t indexOf(uint32_t chr) const {
-			return this->_storage.indexOf(chr);
-		}
+		bool hasSuffix(
+			const String& other
+		) const;
 
-		inline size_t lastIndexOf(const String& other) const {
-			return this->_storage.lastIndexOf(other._storage);
-		}
+		Strong<String> substring(
+			size_t offset,
+			size_t length = NotFound
+		) const;
 
-		bool contains(const String& other) const {
-			return this->indexOf(other) != NotFound;
-		}
+		Strong<String> slicing(
+			ssize_t start = 0,
+			ssize_t end = math::limit<ssize_t>()
+		) const;
 
-		bool hasPrefix(const String& other) const {
-			return this->_storage.hasPrefix(other._storage);
-		}
+		Strong<String> uppercased() const;
 
-		bool hasSuffix(const String& other) const {
-			return this->_storage.hasSuffix(other._storage);
-		}
+		Strong<String> lowercased() const;
 
-		inline Strong<String> substring(size_t offset, size_t length = NotFound) const {
-			return Strong<String>(_storage.subdata(offset, length));
-		}
+		inline Strong<String> capitalized() const;
 
-		inline Strong<String> slicing(ssize_t start = 0, ssize_t end = math::limit<ssize_t>()) const {
-			return Strong<String>(_storage.slicing(start, end));
-		}
+		Strong<String> trimmedStart() const;
 
-		inline Strong<String> uppercased() const {
-			return Strong<String>(this->_storage.map<uint32_t>(Unicode::lowerToUpper));
-		}
+		Strong<String> trimmedEnd() const;
 
-		inline Strong<String> lowercased() const {
-			return String(this->_storage.map<uint32_t>(Unicode::upperToLower));
-		}
+		Strong<String> trimmed() const;
 
-		inline Strong<String> capitalized() const {
-			if (this->length() == 0) return Strong<String>();
-			if (this->length() == 1) return this->uppercased();
-			return this->substring(0, 1)->uppercased()->appending(this->substring(1)->lowercased());
-		}
+		virtual uint64_t hash() const override;
 
-		Strong<String> trimmedStart() const {
+		virtual Kind kind() const override;
 
-			ssize_t start = 0;
+		virtual bool operator==(
+			const Type& other
+		) const override;
 
-			while (start < (ssize_t)this->_storage.length() && Unicode::isWhitespace(this->_storage[start])) {
-				start++;
-			}
+		bool operator==(
+			const char* other
+		) const;
 
-			return this->substring(start);
+		virtual bool operator>(
+			const String& other
+		) const override;
 
-		}
+		uint32_t operator[](
+			size_t idx
+		) const;
 
-		Strong<String> trimmedEnd() const {
-
-			ssize_t end = this->_storage.length() - 1;
-
-			while (end > 0 && Unicode::isWhitespace(this->_storage[end])) {
-				end--;
-			}
-
-			return this->substring(0, end + 1);
-
-		}
-
-		Strong<String> trimmed() const {
-			return this->trimmedStart()->trimmedEnd();
-		}
-
-		virtual uint64_t hash() const override {
-			return _storage.hash();
-		}
-
-		virtual Kind kind() const override {
-			return Kind::string;
-		}
-
-		virtual bool operator==(const Type& other) const override {
-			if (!other.is(Type::Kind::string)) return false;
-			return _storage == ((const String&)other)._storage;
-		}
-
-		inline bool operator==(const char* other) const {
-			return *this == String(other);
-		}
-
-		virtual bool operator>(const String& other) const override {
-			return this->lowercased()->_storage > other.lowercased()->_storage;
-		}
-
-		inline uint32_t operator[](size_t idx) const {
-			return _storage[idx];
-		}
-
-		String& operator=(const String& other) {
-			Type::operator=(other);
-			_storage = other._storage;
-			return *this;
-		}
+		String& operator=(
+			const String& other);
 
 		String& operator=(String&& other) {
 			Type::operator=(std::move(other));
@@ -419,7 +249,9 @@ namespace fart::types {
 		DataValue<uint32_t> _storage;
 
 		template<typename T>
-		static size_t _lengthWithoutNullTerminator(const Data<T>& data) {
+		static size_t _lengthWithoutNullTerminator(
+			const Data<T>& data
+		) {
 			size_t length = data.length();
 			if (length > 0 && data.itemAtIndex(length - 1) == 0) {
 				return length - 1;
@@ -427,208 +259,56 @@ namespace fart::types {
 			return length;
 		}
 
-		static Data<uint32_t> _decodeUTF8(const uint8_t* buffer, size_t length) noexcept(false) {
+		static Data<uint32_t> _decodeUTF8(
+			const uint8_t* buffer,
+			size_t length
+		) noexcept(false);
 
-			size_t offset = 0;
+		static Data<uint8_t> _encodeUTF8(
+			const Data<uint32_t>& buffer,
+			bool nullTerminate = false
+		) noexcept(false);
 
-			if (length > 2 && buffer[0] == 0xEF && buffer[1] == 0xBB && buffer[2] == 0xBF) {
-				offset += 3;
-			}
+		static Data<uint32_t> _decodeUTF16(
+			const uint16_t* buffer,
+			size_t length,
+			Endian::Variant endian
+		) noexcept(false);
 
-			Data<uint32_t> ret;
+		static Data<uint16_t> _encodeUTF16(
+			const Data<uint32_t>& buffer,
+			Endian::Variant endian,
+			bool includeBOM
+		) noexcept(false);
 
-			for (size_t idx = offset ; idx < length ; idx++) {
+		static Data<uint32_t> _decodeUTF32(
+			const Data<uint32_t>& buffer,
+			Endian::Variant endian);
 
-				const uint8_t firstByte = buffer[0];
-				uint32_t codePoint = 0;
-				uint8_t charWidth = 1;
+		static Data<uint32_t> _encodeUTF32(
+			const Data<uint32_t>& buffer,
+			Endian::Variant endian);
 
-				buffer++;
+		static uint8_t _valueFromHex(
+			uint8_t chr,
+			size_t idx
+		) noexcept(false);
 
-				if ((firstByte & 0x80) == 0) {
-					codePoint = firstByte & 0x7F;
-				} else if ((firstByte & 0xE0) == 0xC0) {
-					charWidth = 2;
-					codePoint = firstByte & 0x1F;
-				} else if ((firstByte & 0xF0) == 0xE0) {
-					charWidth = 3;
-					codePoint = firstByte & 0x0F;
-				} else if ((firstByte & 0xF8) == 0xF0) {
-					charWidth = 4;
-					codePoint = firstByte & 0x07;
-				} else { // Malformed.
-					throw DecoderException(idx);
-				}
+		static uint8_t _valueToHex(
+			uint8_t value,
+			size_t idx
+		) noexcept(false);
 
-				// Malformed.
-				if (length < charWidth) {
-					throw DecoderException(idx);
-				}
+		static Data<uint32_t> _decodeHex(
+			const Data<uint8_t>& buffer
+		) noexcept(false);
 
-				for (int64_t i = 1 ; i < charWidth ; i++) {
-					if ((buffer[0] & 0xC0) == 0x80) {
-						codePoint = (codePoint << 6) | (buffer[0] & 0x3F);
-					} else {
-						// Malformed.
-						throw DecoderException(idx);
-					}
-					buffer++;
-					idx++;
-				}
-
-				ret.append(codePoint);
-
-			}
-
-			return ret;
-
-		}
-
-		static Data<uint8_t> _encodeUTF8(const Data<uint32_t> &buffer, bool nullTerminate = false) noexcept(false) {
-
-			Data<uint8_t> ret;
-
-			for (size_t idx = 0 ; idx < buffer.length() ; idx++) {
-
-				uint8_t chr[4];
-
-				uint32_t codePoint = buffer[idx];
-				if (codePoint < 0x80) {
-					ret.append(codePoint);
-				} else if (codePoint < 0x800) {
-					uint8_t chr[2];
-					chr[0] = 0xC0 | (codePoint >> 6);
-					chr[1] = 0x80 | (codePoint & 0x3F);
-					ret.append(chr, 2);
-				} else if (codePoint <= 0xFFFF) {
-					chr[0] = 0xE0 | (codePoint >> 12);
-					chr[1] = 0x80 | ((codePoint >> 6) & 0x3F);
-					chr[2] = 0x80 | (codePoint & 0x3F);
-					ret.append(chr, 3);
-				} else if (codePoint <= 0x1FFFFF) {
-					chr[0] = 0xF0 | (codePoint >> 18);
-					chr[1] = 0x80 | ((codePoint >> 12) & 0x3F);
-					chr[2] = 0x80 | ((codePoint >> 6) & 0x3F);
-					chr[3] = 0x80 | (codePoint & 0x3F);
-					ret.append(chr, 4);
-				}
-
-			}
-
-			if (nullTerminate) ret.append('\0');
-
-			return ret;
-
-		}
-
-		static Data<uint32_t> _decodeUTF16(const uint16_t* buffer, size_t length, Endian::Variant endian) noexcept(false) {
-
-			Data<uint32_t> ret;
-
-			for (size_t idx = 0 ; idx < length ; idx++) {
-
-				uint16_t high = Endian::toSystemVariant(buffer[idx], endian);
-
-				if (!(high >= 0xD800 && high <= 0xD8FF) || idx + 1 == length) ret.append(high);
-				else {
-
-					uint16_t low = Endian::toSystemVariant(buffer[idx + 1], endian);
-
-					if (low >= 0xDC00 && low <= 0xDFFF) {
-						ret.append((((high & 0x3FF) << 10) | (low & 0x3FF)) + 0x10000);
-						idx++;
-					}
-
-				}
-
-			}
-
-			return ret;
-
-		}
-
-		static Data<uint16_t> _encodeUTF16(const Data<uint32_t>& buffer, Endian::Variant endian, bool includeBOM) noexcept(false) {
-
-			Data<uint16_t> ret;
-
-			if (includeBOM) {
-				ret.append((endian == Endian::Variant::big ? bigEndianBOM : littleEndianBOM).as<uint16_t>());
-			}
-
-			for (size_t idx = 0 ; idx < buffer.length() ; idx++) {
-
-				uint32_t chr = buffer[idx];
-
-				if (chr <= 0xFFFF) ret.append(Endian::fromSystemVariant((uint16_t)chr, endian));
-				else {
-					chr -= 0x10000;
-					ret.append(Endian::fromSystemVariant(0xD800 + ((chr >> 10) & 0x3FF), endian));
-					ret.append(Endian::fromSystemVariant(0xDC00 + (chr & 0x3FF), endian));
-				}
-
-			}
-
-			return ret;
-
-		}
-
-		inline static Data<uint32_t> _decodeUTF32(const Data<uint32_t>& buffer, Endian::Variant endian) {
-			return buffer.map<uint32_t>([&endian](uint32_t character) {
-				return Endian::convert(character, endian, Endian::systemVariant());
-			});
-		}
-
-		inline static Data<uint32_t> _encodeUTF32(const Data<uint32_t>& buffer, Endian::Variant endian) {
-			return buffer.map<uint32_t>([&endian](uint32_t character) {
-				return Endian::convert(character, Endian::systemVariant(), endian);
-			});
-		}
-
-		static uint8_t _valueFromHex(uint8_t chr, size_t idx) noexcept(false) {
-			if (chr >= 'a' && chr <= 'f') return chr - ('a' - 'A');
-			if (chr >= 'A' && chr <= 'F') return (chr - 'A') + 10;
-			else if (chr >= '0' && chr <= '9') return chr - '0';
-			else throw DecoderException(idx);
-		}
-
-		static uint8_t _valueToHex(uint8_t value, size_t idx) noexcept(false) {
-			if (value < 10) return '0' + value;
-			else if (value < 16) return 'A' + (value - 10);
-			else throw EncoderException(idx);
-		}
-
-		static Data<uint32_t> _decodeHex(const Data<uint8_t>& buffer) noexcept(false) {
-
-			if (buffer.length() % 2 != 0) throw OutOfBoundException(buffer.length() + 1);
-
-			Data<uint32_t> ret;
-
-			for (size_t idx = 0 ; idx < buffer.length() ; idx++) {
-				auto byte = buffer[idx];
-				ret.append(_valueToHex((byte & 0xF0) >> 4, idx));
-				ret.append(_valueToHex(byte & 0x0F, idx));
-			}
-
-			return ret;
-
-		}
-
-		static Data<uint8_t> _encodeHex(const Data<uint32_t> &buffer) noexcept(false) {
-
-			if (buffer.length() % 2 != 0) throw OutOfBoundException(buffer.length() + 1);
-
-			Data<uint8_t> ret;
-
-			for (size_t idx = 0 ; idx < buffer.length() ; idx += 2) {
-				ret.append(_valueFromHex(buffer[idx], idx) << 4 | _valueFromHex(buffer[idx + 1], idx + 1));
-			}
-
-			return ret;
-
-		}
+		static Data<uint8_t> _encodeHex(
+			const Data<uint32_t> &buffer
+		) noexcept(false);
 
 	};
 
 }
 
-#endif /* string_hpp */
+#endif /* shared_foundation_string_hpp */

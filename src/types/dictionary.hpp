@@ -1,20 +1,20 @@
 //
 // dictionary.hpp
-// fart
+// shared-foundation-cpp
 //
 // Created by Kristian Trenskow on 2018/09/09.
 // See license in LICENSE.
 //
 
-#ifndef dictionary_hpp
-#define dictionary_hpp
+#ifndef shared_foundation_dictionary_hpp
+#define shared_foundation_dictionary_hpp
 
 #include <thread>
 #include "./array.hpp"
 #include "./pair.hpp"
 #include "./type.hpp"
 
-namespace fart::types {
+namespace games::zerobit::shared::foundation::types {
 
 	template<typename Key, class Value = Type>
 	class Dictionary : public Type {
@@ -281,4 +281,4 @@ namespace fart::types {
 
 }
 
-#endif /* dictionary_hpp */
+#endif /* shared_foundation_dictionary_hpp */

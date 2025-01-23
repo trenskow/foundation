@@ -1,17 +1,17 @@
 //
 // comparable.hpp
-// fart
+// shared-foundation-cpp
 //
 // Created by Kristian Trenskow on 2023/01/21.
 // See license in LICENSE.
 //
 
-#ifndef comparable_hpp
-#define comparable_hpp
+#ifndef shared_foundation_comparable_hpp
+#define shared_foundation_comparable_hpp
 
 #include "./comparison.hpp"
 
-namespace fart::types {
+namespace games::zerobit::shared::foundation::types {
 
 	template<typename T>
 	class Comparable {
@@ -42,4 +42,4 @@ namespace fart::types {
 
 }
 
-#endif /* comparable_hpp */
+#endif /* shared_foundation_comparable_hpp */

@@ -1,15 +1,15 @@
 //
 // system.hpp
-// fart
+// shared-foundation-cpp
 //
 // Created by Kristian Trenskow on 2020/04/03.
 // See license in LICENSE.
 //
 
-#ifndef system_hpp
-#define system_hpp
+#ifndef shared_foundation_system_hpp
+#define shared_foundation_system_hpp
 
 #include "./endian.hpp"
 #include "./environment.hpp"
 
-#endif /* system_hpp */
+#endif /* shared_foundation_system_hpp */

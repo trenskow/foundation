@@ -1,13 +1,13 @@
 //
 // type.hpp
-// fart
+// shared-foundation-cpp
 //
 // Created by Kristian Trenskow on 2018/09/10.
 // See license in LICENSE.
 //
 
-#ifndef type_hpp
-#define type_hpp
+#ifndef shared_foundation_type_hpp
+#define shared_foundation_type_hpp
 
 #include <stdint.h>
 
@@ -16,11 +16,11 @@
 #include "../exceptions/exception.hpp"
 #include "../tools/math.hpp"
 
-using namespace fart::memory;
-using namespace fart::exceptions::types;
-using namespace fart::tools;
+using namespace games::zerobit::shared::foundation::memory;
+using namespace games::zerobit::shared::foundation::exceptions::types;
+using namespace games::zerobit::shared::foundation::tools;
 
-namespace fart::types {
+namespace games::zerobit::shared::foundation::types {
 
 	static const size_t NotFound = math::limit<size_t>();
 
@@ -41,38 +41,36 @@ namespace fart::types {
 			null
 		};
 
-		Type() : Object(), Hashable() { }
-		Type(const Type& other) = delete;
-		Type(Type&& other) = delete;
+		Type();
 
-		virtual Kind kind() const {
-			throw NotImplementedException();
-		}
+		Type(
+			const Type& other
+		) = delete;
 
-		Type& operator=(const Type& other) {
-			Object::operator=(other);
-			Hashable::operator=(other);
-			return *this;
-		}
+		Type(
+			Type&& other
+		) = delete;
 
-		Type& operator=(Type&& other) {
-			Object::operator=(std::move(other));
-			Hashable::operator=(std::move(other));
-			return *this;
-		}
+		virtual Kind kind() const;
 
-		virtual bool operator==(const Type& other) const {
-			if (this->kind() != other.kind()) return false;
-			return this->hash() == other.hash();
-		}
+		Type& operator=(
+			const Type& other
+		);
 
-		virtual bool operator!=(const Type& other) const {
-			return !(*this == other);
-		}
+		Type& operator=(
+			Type&& other);
 
-		bool is(Kind kind) const {
-			return kind == this->kind();
-		}
+		virtual bool operator==(
+			const Type& other
+		) const;
+
+		virtual bool operator!=(
+			const Type& other
+		) const;
+
+		bool is(
+			Kind kind
+		) const;
 
 		template<typename T>
 		inline T& as() const {
@@ -89,4 +87,4 @@ namespace fart::types {
 
 }
 
-#endif /* type_hpp */
+#endif /* shared_foundation_type_hpp */

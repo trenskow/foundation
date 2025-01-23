@@ -12,10 +12,10 @@
 #include "../exceptions/exception.hpp"
 #include "../tools/math.hpp"
 
-using namespace fart::exceptions;
-using namespace fart::tools;
+using namespace games::zerobit::shared::foundation::exceptions;
+using namespace games::zerobit::shared::foundation::tools;
 
-namespace fart::types {
+namespace games::zerobit::shared::foundation::types {
 
 	class Hashable {
 
@@ -25,30 +25,21 @@ namespace fart::types {
 
 			public:
 
-				inline Builder() : _hash(5381) { }
+				Builder();
 
-				inline Builder& add(uint64_t value) {
-					_hash = ((_hash << 5) + _hash) + (uint64_t)value;
-					return *this;
-				}
+				Builder& add(
+					uint64_t value);
 
-				inline Builder& add(double value) {
-					uint64_t intValue = 0;
-					memcpy(&intValue, &value, math::min(sizeof(uint64_t), sizeof(double)));
-					return this->add(intValue);
-				}
+				Builder& add(
+					double value);
 
-				inline Builder& add(float value) {
-					return this->add((double)value);
-				}
+				Builder& add(
+					float value);
 
-				inline Builder& add(const Hashable& hashable) {
-					return this->add(hashable.hash());
-				}
+				Builder& add(
+					const Hashable& hashable);
 
-				inline operator uint64_t() {
-					return _hash;
-				}
+				operator uint64_t();
 
 			private:
 
@@ -56,29 +47,25 @@ namespace fart::types {
 
 			};
 
-			Hashable() { }
+			Hashable();
 
-			Hashable(const Hashable&) { }
+			Hashable(
+				const Hashable&);
 
-			Hashable(Hashable&&) { }
+			Hashable(
+				Hashable&&);
 
-			virtual uint64_t hash() const {
-				return this->hashBuilder();
-			};
+			virtual uint64_t hash() const;
 
-			Hashable& operator=(const Hashable&) {
-				return *this;
-			}
+			Hashable& operator=(
+				const Hashable&);
 
-			Hashable& operator=(Hashable&&) {
-				return *this;
-			}
+			Hashable& operator=(
+				Hashable&&);
 
 		protected:
 
-			virtual Builder hashBuilder() const {
-				throw NotImplementedException();
-			}
+			virtual Builder hashBuilder() const;
 
 	};
 

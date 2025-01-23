@@ -1,56 +1,34 @@
 //
 // allocator.hpp
-// fart
+// shared-foundation-cpp
 //
 // Created by Kristian Trenskow on 2021/07/19.
 // See license in LICENSE.
 //
 
-#ifndef allocator_hpp
-#define allocator_hpp
+#ifndef shared_foundation_allocator_hpp
+#define shared_foundation_allocator_hpp
 
-#include <math.h>
-
-#include "../exceptions/exception.hpp"
-#include "../tools/math.hpp"
-
-#ifndef FART_BLOCK_SIZE
-#define FART_BLOCK_SIZE 32
-#endif
-
-using namespace fart::tools;
-using namespace fart::exceptions::memory;
-
-namespace fart::memory {
+namespace games::zerobit::shared::foundation::memory {
 
 	class Allocator {
 
 	public:
 
-		inline void *operator new(size_t size) noexcept(false) {
-			return allocate(size);
-		}
-
-		inline void operator delete(void *ptr) throw() {
-			deallocate(ptr);
-		}
+		void *operator new(size_t size) noexcept(false);
+		void operator delete(void *ptr) throw();
 
 	protected:
 
-		inline static uint64_t calculateBufferLength(const uint64_t& minimumLength) {
-			// Dynamic heap allocated memory is doubled every time buffer is too small.
-			return (uint64_t)pow(2, ceil(log2((math::max<double>(minimumLength, FART_BLOCK_SIZE) / FART_BLOCK_SIZE)))) * FART_BLOCK_SIZE;;
-		}
+		static uint64_t calculateBufferLength(
+			const uint64_t& minimumLength);
 
-		static void* allocate(size_t size) noexcept(false) {
-			void *mem = calloc(size, sizeof(uint8_t));
-			if (!mem) throw AllocationException(size);
-			return mem;
-		}
+		static void* allocate(
+			size_t size
+		) noexcept(false);
 
-		inline static void deallocate(void* ptr) throw() {
-			free(ptr);
-		}
+		static void deallocate(
+			void* ptr);
 
 	};
 
@@ -65,4 +43,4 @@ namespace fart::memory {
 
 }
 
-#endif /* allocator_hpp */
+#endif /* shared_foundation_allocator_hpp */

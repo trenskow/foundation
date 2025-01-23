@@ -1,16 +1,16 @@
 
 //
 // pair.hpp
-// fart
+// shared-foundation-cpp
 //
 // Created by Kristian Trenskow on 2021/01/24.
 // See license in LICENSE.
 //
 
-#ifndef pair_hpp
-#define pair_hpp
+#ifndef shared_foundation_pair_hpp
+#define shared_foundation_pair_hpp
 
-namespace fart::types {
+namespace games::zerobit::shared::foundation::types {
 
 	template<typename First, typename Second>
 	class Pair: public Type {
@@ -79,4 +79,4 @@ namespace fart::types {
 
 }
 
-#endif /* pair_hpp */
+#endif /* shared_foundation_pair_hpp */

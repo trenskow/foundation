@@ -1,21 +1,19 @@
-//
 // duration.hpp
-// fart
+// shared-foundation-cpp
 //
 // Created by Kristian Trenskow on 2020/04/04.
 // See license in LICENSE.
 //
 
-#ifndef duration_hpp
-#define duration_hpp
+#ifndef shared_foundation_duration_hpp
+#define shared_foundation_duration_hpp
 
 #include <math.h>
 
-#include "../memory/strong.hpp"
-#include "./type.hpp"
+#include "./string.hpp"
 #include "./comparable.hpp"
 
-namespace fart::types {
+namespace games::zerobit::shared::foundation::types {
 
 	class Duration : public Comparable<Duration> {
 
@@ -25,197 +23,56 @@ namespace fart::types {
 
 	public:
 
-		static const Duration& zero() {
-			static const Duration zero = 0;
-			return zero;
-		}
+		static const Duration& zero();
+		static const Duration& microsecond();
+		static const Duration& millisecond();
+		static const Duration& second();
+		static const Duration& minute();
+		static const Duration& hour();
+		static const Duration& day();
+		static const Duration& year(bool isLeapYear = false);
 
-		static const Duration& microsecond() {
-			static const Duration microsecond = millisecond().seconds() / 1000.0;
-			return microsecond;
-		}
+		static Duration parse(const String& string);
 
-		static const Duration& millisecond() {
-			static const Duration millisecond = 1.0 / 1000.0;
-			return millisecond;
-		}
+		Duration();
+		Duration(double duration);
+		~Duration();
 
-		static const Duration& second() {
-			static const Duration second = 1;
-			return second;
-		}
+		static Duration fromMicroseconds(double microseconds);
+		static Duration fromMilliseconds(double milliseconds);
+		static Duration fromSeconds(double seconds);
+		static Duration fromMinutes(double minutes);
+		static Duration fromHours(double hours);
+		static Duration fromDays(double days);
 
-		static const Duration& minute() {
-			static const Duration minute = 60 * second().seconds();
-			return minute;
-		}
-
-		static const Duration& hour() {
-			static const Duration hour = 60 * minute().seconds();
-			return hour;
-		}
-
-		static const Duration& day() {
-			static const Duration day = 24 * hour().seconds();
-			return day;
-		}
-
-		static const Duration& year(bool isLeapYear = false) {
-			static const Duration year = 365 * day().seconds();
-			static const Duration leapYear = 366 * day().seconds();
-			return isLeapYear ? leapYear : year;
-		}
-
-		static Duration parse(const String& string) {
-
-			if (string == "Z") return Duration::zero();
-
-			String parse = string;
-
-			if (parse.length() == 0) throw DurationParserException();
-
-			double multiplier = 1;
-
-			auto prefix = parse.substring(0, 1);
-			if (*prefix == "+" || *prefix == "-") {
-				multiplier = (*prefix == "-" ? -1 : 1);
-				parse = parse.substring(1);
-			}
-
-			uint64_t hours = 0;
-			uint64_t minutes = 0;
-
-			if (parse.length() == 5 && *parse.substring(2, 1) == ":") {
-				hours = parse.substring(0, 2)->doubleValue();
-				minutes = parse.substring(3, 2)->doubleValue();
-			}
-			else if (parse.length() == 4) {
-				hours = parse.substring(0, 2)->doubleValue();
-				minutes = parse.substring(2, 4)->doubleValue();
-			}
-			else if (parse.length() == 2) {
-				hours = parse.doubleValue();
-			}
-			else throw DurationParserException();
-
-			return Duration::fromHours(hours) + Duration::fromMinutes(minutes) * multiplier;
-
-		}
-
-		Duration(): _seconds(0) {}
-		Duration(double duration) : _seconds(duration) {}
-
-		~Duration() {};
-
-		static Duration fromMicroseconds(double microseconds) {
-			return Duration::fromMilliseconds(microseconds / 1000);
-		}
-
-		static Duration fromMilliseconds(double milliseconds) {
-			return Duration::fromSeconds(milliseconds / 1000);
-		}
-
-		static Duration fromSeconds(double seconds) {
-			return Duration(seconds);
-		}
-
-		static Duration fromMinutes(double minutes) {
-			return Duration::fromSeconds(minutes * 60);
-		}
-
-		static Duration fromHours(double hours) {
-			return Duration::fromMinutes(hours * 60);
-		}
-
-		static Duration fromDays(double days) {
-			return Duration::fromHours(days * 24);
-		}
-
-		inline  double microseconds() const {
-			return this->milliseconds() * 1000;
-		}
-
-		inline double milliseconds() const {
-			return this->seconds() * 1000;
-		}
-
-		inline double seconds() const {
-			return this->_seconds;
-		}
-
-		inline double minutes() const {
-			return this->seconds() / minute().seconds();
-		}
-
-		inline double hours() const {
-			return this->seconds() / hour().seconds();
-		}
-
-		inline double days() const {
-			return this->seconds() / day().seconds();
-		}
+		double microseconds() const;
+		double milliseconds() const;
+		double seconds() const;
+		double minutes() const;
+		double hours() const;
+		double days() const;
 
 		enum class ToStringOptions: uint8_t {
 			prefixPositive = 1 << 0
 		};
 
-		String toString(ToStringOptions options) const {
-			double offset = _seconds;
-			double absOffset = fabs(offset);
-			uint64_t hours = Duration(absOffset).hours();
-			uint64_t minutes = Duration(absOffset - Duration::fromHours(hours)).minutes();
-			String prefix = offset < 0 ? "-" : (static_cast<uint8_t>(options) & static_cast<uint8_t>(ToStringOptions::prefixPositive) ? "+" : "");
-			return prefix.mapCString<String>([&hours,&minutes](const char* prefix){
-				return String(String::format("%s%02llu:%02llu", prefix, hours, minutes));
-			});
-		}
+		String toString(ToStringOptions options) const;
 
-		operator double() const {
-			return this->seconds();
-		}
+		operator double() const;
 
-		bool operator==(const Duration& other) const {
-			return _seconds == other._seconds;
-		}
-
-		virtual bool operator>(const Duration& other) const override {
-			return _seconds > other._seconds;
-		}
-
-		Duration operator+(const Duration& other) const {
-			return this->seconds() + other.seconds();
-		}
-
-		Duration operator-(const Duration& other) const {
-			return this->seconds() - other.seconds();
-		}
-
-		Duration operator*(const double other) const {
-			return this->seconds() * other;
-		}
-
-		Duration operator/(const double other) const {
-			return this->seconds() / other;
-		}
-
-		void operator+=(const Duration& other) {
-			_seconds += other;
-		}
-
-		void operator-=(const Duration& other) {
-			_seconds -= other;
-		}
-
-		void operator*=(const double other) {
-			_seconds *= other;
-		}
-
-		void operator/=(const double other) {
-			_seconds /= other;
-		}
+		bool operator==(const Duration& other) const;
+		virtual bool operator>(const Duration& other) const override;
+		Duration operator+(const Duration& other) const;
+		Duration operator-(const Duration& other) const;
+		Duration operator*(const double other) const;
+		Duration operator/(const double other) const;
+		void operator+=(const Duration& other);
+		void operator-=(const Duration& other);
+		void operator*=(const double other);
+		void operator/=(const double other);
 
 	};
 
 }
 
-#endif /* duration_hpp */
+#endif /* shared_foundation_duration_hpp */

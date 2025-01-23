@@ -1,13 +1,13 @@
 //
 // types.hpp
-// fart
+// shared-foundation-cpp
 //
 // Created by Kristian Trenskow on 2019/12/12.
 // See license in LICENSE.
 //
 
-#ifndef types_hpp
-#define types_hpp
+#ifndef shared_foundation_types_hpp
+#define shared_foundation_types_hpp
 
 #include "./hashable.hpp"
 #include "./comparable.hpp"
@@ -24,4 +24,4 @@
 #include "./uuid.hpp"
 #include "./url.hpp"
 
-#endif /* types_hpp */
+#endif /* shared_foundation_types_hpp */

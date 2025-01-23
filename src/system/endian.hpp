@@ -1,21 +1,23 @@
 //
 // endian.hpp
-// fart
+// shared-foundation-cpp
 //
 // Created by Kristian Trenskow on 2020/04/01.
 // See license in LICENSE.
 //
 
-#ifndef endian_hpp
-#define endian_hpp
+#ifndef shared_foundation_endian_hpp
+#define shared_foundation_endian_hpp
 
+#include <stdlib.h>
 #include <stdint.h>
 
-namespace fart::system {
+namespace games::zerobit::shared::foundation::system {
 
 	class Endian {
 
 	private:
+
 		template<typename T>
 		static const T swap(T val) {
 			T ret;
@@ -34,13 +36,10 @@ namespace fart::system {
 			big
 		};
 
-		inline static Variant systemVariant() {
-			static const uint32_t test = 0x00000001;
-			return *((uint8_t *)&test) == 0x01 ? Variant::little : Variant::big;
-		}
+		static Variant systemVariant();
 
 		template<typename T>
-		inline static const T convert(T val, Variant from, Variant to) {
+		static const T convert(T val, Variant from, Variant to) {
 			if (from == to) return val;
 			return swap(val);
 		}
@@ -59,4 +58,4 @@ namespace fart::system {
 
 }
 
-#endif /* endian_hpp */
+#endif /* shared_foundation_endian_hpp */

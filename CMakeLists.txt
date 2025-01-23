@@ -15,7 +15,22 @@ if(NOT LIBRARY_BUILD_TYPE)
 endif()
 
 add_library(shared-foundation-cpp ${LIBRARY_BUILD_TYPE}
-	)
+	src/exceptions/exception.cpp
+	src/memory/allocator.cpp
+	src/memory/object.cpp
+	src/serialization/json.cpp
+	src/system/endian.cpp
+	src/system/environment.cpp
+	src/tools/regular-expression.cpp
+	src/types/date.cpp
+	src/types/duration.cpp
+	src/types/hashable.cpp
+	src/types/null.cpp
+	src/types/string.cpp
+	src/types/type.cpp
+	src/types/unicode.cpp
+	src/types/url.cpp
+	src/types/uuid.cpp)
 
 set(ARCH_OUTPUT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/build/${CMAKE_BUILD_TYPE}/${CMAKE_SYSTEM_PROCESSOR}")
 

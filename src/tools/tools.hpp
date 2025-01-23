@@ -1,15 +1,15 @@
 //
 // tools.hpp
-// fart
+// shared-foundation-cpp
 //
 // Created by Kristian Trenskow on 2020/04/05.
 // See license in LICENSE.
 //
 
-#ifndef tools_hpp
-#define tools_hpp
+#ifndef shared_foundation_tools_hpp
+#define shared_foundation_tools_hpp
 
 #include "./math.hpp"
 #include "./regular-expression.hpp"
 
-#endif /* tools_hpp */
+#endif /* shared_foundation_tools_hpp */

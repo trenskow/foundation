@@ -1,22 +1,25 @@
 //
 // strong.hpp
-// fart
+// shared-foundation-cpp
 //
 // Created by Kristian Trenskow on 2018/08/17.
 // See license in LICENSE.
 //
 
-#ifndef strong_hpp
-#define strong_hpp
+#ifndef shared_foundation_strong_hpp
+#define shared_foundation_strong_hpp
+
+#include <assert.h>
 
 #include <type_traits>
+#include <functional>
 
 #include "./allocator.hpp"
 #include "./object.hpp"
 
 using namespace std;
 
-namespace fart::memory {
+namespace games::zerobit::shared::foundation::memory {
 
 	template<typename T>
 	class Weak;
@@ -179,4 +182,4 @@ namespace fart::memory {
 
 }
 
-#endif /* strong_hpp */
+#endif /* shared_foundation_strong_hpp */

@@ -1,13 +1,13 @@
 //
 // data.hpp
-// fart
+// shared-foundation-cpp
 //
 // Created by Kristian Trenskow on 2018/08/17.
 // See license in LICENSE.
 //
 
-#ifndef data_hpp
-#define data_hpp
+#ifndef shared_foundation_data_hpp
+#define shared_foundation_data_hpp
 
 #include <stdlib.h>
 #include <string.h>
@@ -20,11 +20,11 @@
 
 #define MAX(x, y) (x > y ? x : y)
 
-using namespace fart::memory;
-using namespace fart::exceptions::types;
-using namespace fart::tools;
+using namespace games::zerobit::shared::foundation::memory;
+using namespace games::zerobit::shared::foundation::exceptions::types;
+using namespace games::zerobit::shared::foundation::tools;
 
-namespace fart::types {
+namespace games::zerobit::shared::foundation::types {
 
 	class String;
 
@@ -34,6 +34,9 @@ namespace fart::types {
 		suffix,
 		both
 	};
+
+	template<typename T>
+	class Array;
 
 	template<typename T = uint8_t>
 	class Data : public Type, public Comparable<Data<T>> {
@@ -638,7 +641,7 @@ namespace fart::types {
 			return this->equals((const Data<T>&)other);
 		}
 
-		bool operator>(const Data<T>& other) const override {
+		virtual bool operator>(const Data<T>& other) const override {
 			for (size_t idx = 0 ; idx < this->length() ; idx++) {
 				if (idx >= other.length()) return true;
 				T left = this->_get(idx);
@@ -832,4 +835,4 @@ namespace fart::types {
 
 }
 
-#endif /* data_hpp */
+#endif /* shared_foundation_data_hpp */

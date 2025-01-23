@@ -1,20 +1,20 @@
 //
 // weak.hpp
-// fart
+// shared-foundation-cpp
 //
 // Created by Kristian Trenskow on 2018/09/04.
 // See license in LICENSE.
 //
 
-#ifndef weak_hpp
-#define weak_hpp
+#ifndef shared_foundation_weak_hpp
+#define shared_foundation_weak_hpp
 
 #include <type_traits>
 #include <atomic>
 
 #include "./allocator.hpp"
 
-namespace fart::memory {
+namespace games::zerobit::shared::foundation::memory {
 
 	class Object;
 
@@ -118,4 +118,4 @@ namespace fart::memory {
 
 }
 
-#endif /* weak_hpp */
+#endif /* shared_foundation_weak_hpp */

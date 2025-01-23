@@ -1,24 +1,26 @@
 //
 // array.hpp
-// fart
+// shared-foundation-cpp
 //
 // Created by Kristian Trenskow on 2018/09/04.
 // See license in LICENSE.
 //
 
-#ifndef array_hpp
-#define array_hpp
+#ifndef shared_foundation_array_hpp
+#define shared_foundation_array_hpp
 
 #include <type_traits>
+#include <functional>
 
 #include "../memory/strong.hpp"
 #include "./type.hpp"
 #include "./comparable.hpp"
+#include "./data.hpp"
 
-using namespace fart::memory;
-using namespace fart::exceptions::types;
+using namespace games::zerobit::shared::foundation::memory;
+using namespace games::zerobit::shared::foundation::exceptions::types;
 
-namespace fart::types {
+namespace games::zerobit::shared::foundation::types {
 
 	template<typename T>
 	class Data;
@@ -635,4 +637,4 @@ namespace fart::types {
 
 }
 
-#endif /* array_hpp */
+#endif /* shared_foundation_array_hpp */

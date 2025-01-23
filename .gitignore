@@ -1,1 +1,8 @@
 .DS_Store
+.ninja_deps
+.ninja_log
+CMakeCache.txt
+CMakeFiles/
+build.ninja
+build/
+cmake_install.cmake

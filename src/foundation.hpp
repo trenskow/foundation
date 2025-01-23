@@ -1,25 +1,19 @@
 //
-// fart.hpp
-// fart
+// foundation.hpp
+// shared-foundation-cpp
 //
 // Created by Kristian Trenskow on 2019/12/14.
 // See license in LICENSE.
 //
 
-#ifndef fart_hpp
-#define fart_hpp
-
-/* The classes below are exported */
-#pragma GCC visibility push(default)
+#ifndef shared_foundation_hpp
+#define shared_foundation_hpp
 
 #include "./exceptions/exceptions.hpp"
-#include "./threading/threading.hpp"
 #include "./types/types.hpp"
 #include "./memory/memory.hpp"
 #include "./serialization/serialization.hpp"
 #include "./system/system.hpp"
 #include "./tools/tools.hpp"
 
-#pragma GCC visibility pop
-
-#endif /* fart_hpp */
+#endif /* shared_foundation_hpp */

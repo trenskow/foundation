@@ -1,19 +1,19 @@
 //
 // math.hpp
-// fart
+// shared-foundation-cpp
 //
 // Created by Kristian Trenskow on 2020/04/05.
 // See license in LICENSE.
 //
 
-#ifndef math_hpp
-#define math_hpp
+#ifndef shared_foundation_math_hpp
+#define shared_foundation_math_hpp
 
 #include <type_traits>
 
 #include <string.h>
 
-namespace fart::tools {
+namespace games::zerobit::shared::foundation::tools {
 
 	namespace math {
 
@@ -44,4 +44,4 @@ namespace fart::tools {
 
 }
 
-#endif /* math_hpp */
+#endif /* shared_foundation_math_hpp */

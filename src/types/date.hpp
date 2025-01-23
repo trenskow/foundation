@@ -1,35 +1,30 @@
 //
 // date.hpp
-// fart
+// shared-foundation-cpp
 //
 // Created by Kristian Trenskow on 2020/04/03.
 // See license in LICENSE.
 //
 
-#ifndef date_hpp
-#define date_hpp
+#ifndef shared_foundation_date_hpp
+#define shared_foundation_date_hpp
 
-#include <math.h>
 #include <time.h>
 #include <sys/time.h>
 
-#include "../exceptions/exception.hpp"
 #include "./type.hpp"
-#include "./duration.hpp"
-#include "./string.hpp"
 #include "./comparable.hpp"
+#include "./duration.hpp"
 
-using namespace fart::exceptions::types;
+using namespace games::zerobit::shared::foundation::exceptions::types;
 
-namespace fart::types {
+namespace games::zerobit::shared::foundation::types {
 
 	class Date : public Type, public Comparable<Date> {
 
 	public:
 
-		static Type::Kind typeKind() {
-			return Type::Kind::date;
-		}
+		static Type::Kind typeKind();
 
 		enum class TimeZone {
 			utc,
@@ -61,320 +56,135 @@ namespace fart::types {
 			saturday
 		};
 
-	private:
+		static constexpr Date::Weekday _epochWeekday = Date::Weekday::thursday;
 
-		static const Weekday _epochWeekday = Weekday::thursday;
+	private:
 
 		Duration _time;
 		TimeZone _timeZone;
 
-		static uint16_t daysInMonth(Month month, bool isLeapYear = false) {
-			switch (month) {
-				case Month::january: return 31;
-				case Month::february: return isLeapYear ? 29 : 28;
-				case Month::march: return 31;
-				case Month::april: return 30;
-				case Month::may: return 31;
-				case Month::june: return 30;
-				case Month::july: return 31;
-				case Month::august: return 31;
-				case Month::september: return 30;
-				case Month::october: return 31;
-				case Month::november: return 30;
-				case Month::december: return 31;
-			}
-		}
+		static uint16_t daysInMonth(
+			Month month,
+			bool isLeapYear = false);
 
-		static int64_t _daysFromEpoch(int64_t y, unsigned m, unsigned d) {
-			y -= m <= 2;
-			const int64_t era = (y >= 0 ? y : y-399) / 400;
-			const unsigned yoe = static_cast<unsigned>(y - era * 400);      // [0, 399]
-			const unsigned doy = (153*(m + (m > 2 ? -3 : 9)) + 2)/5 + d-1;  // [0, 365]
-			const unsigned doe = yoe * 365 + yoe/4 - yoe/100 + doy;         // [0, 146096]
-			return era * 146097 + static_cast<int64_t>(doe) - 719468;
-		}
+		static int64_t _daysFromEpoch(
+			int64_t y,
+			unsigned m,
+			unsigned d);
 
-		static void _components(int64_t time, int64_t *year, uint8_t *month, uint8_t *day) {
-			time += 719468;
-			const int64_t era = (time >= 0 ? time : time - 146096) / 146097;
-			const unsigned doe = static_cast<unsigned>(time - era * 146097);          // [0, 146096]
-			const unsigned yoe = (doe - doe/1460 + doe/36524 - doe/146096) / 365;  // [0, 399]
-			const int64_t y = static_cast<int64_t>(yoe) + era * 400;
-			const unsigned doy = doe - (365*yoe + yoe/4 - yoe/100);                // [0, 365]
-			const unsigned mp = (5*doy + 2)/153;                                   // [0, 11]
-			const unsigned d = doy - (153*mp+2)/5 + 1;                             // [1, 31]
-			const unsigned m = mp + (mp < 10 ? 3 : -9);                            // [1, 12]
-			if (year != nullptr) *year = y + (m <= 2);
-			if (month != nullptr) *month = m;
-			if (day != nullptr) *day = d;
-		}
+		static void _components(
+			int64_t time,
+			int64_t *year,
+			uint8_t *month,
+			uint8_t *day);
 
-		void _set(const int64_t year, const uint8_t month, const uint8_t day, const uint8_t hours, const uint8_t minutes, const uint8_t seconds, uint64_t microseconds) {
-			_time = Duration::fromDays(_daysFromEpoch(year, month, day));
-			_time += Duration::fromHours(hours);
-			_time += Duration::fromMinutes(minutes);
-			_time += Duration::fromSeconds(seconds);
-			_time += Duration::fromMicroseconds(microseconds);
-		}
+		void _set(
+			const int64_t year,
+			const uint8_t month,
+			const uint8_t day,
+			const uint8_t hours,
+			const uint8_t minutes,
+			const uint8_t seconds,
+			uint64_t microseconds);
 
-		static const Duration _localOffset() {
-			time_t rawTime;
-			::time(&rawTime);
-			return localtime(&rawTime)->tm_gmtoff;
-		}
+		static const Duration _localOffset();
 
 	public:
 
 		static const uint8_t daysInWeek = 7;
 
-		static const Date& epoch() {
-			static const Date epoch = Duration::zero();
-			return epoch;
-		}
+		static const Date& epoch();
 
-		static bool isLeapYear(int64_t year) {
-			return year % 4 == 0 && (year % 100 != 0 || year % 400 == 0);
-		}
+		static bool isLeapYear(
+			int64_t year);
 
-		Date(const Date& other) : Type(), _time(other._time), _timeZone(other._timeZone) { }
+		Date(
+			const Date& other);
 
-		Date() : _timeZone(TimeZone::utc) {
+		Date();
 
-			struct timeval tv;
+		Date(
+			const Duration& time,
+			TimeZone timeZone = TimeZone::utc),
 
-			gettimeofday(&tv, nullptr);
+		Date(
+			const double time,
+			TimeZone timeZone = TimeZone::utc);
 
-			time_t time = ::time(nullptr);
+		Date(
+			const int64_t year,
+			const uint8_t month,
+			const uint8_t day,
+			const uint8_t hours = 0,
+			const uint8_t minutes = 0,
+			const uint8_t seconds = 0,
+			uint64_t microseconds = 0);
 
-			_time = Duration::fromSeconds((double)time + ((double)tv.tv_usec / 1000000));
+		Date(
+			const String& iso8601);
 
-		}
+		virtual ~Date();
 
-		Date(const Duration& time, TimeZone timeZone = TimeZone::utc) : _time(time), _timeZone(timeZone) { }
+		int64_t year() const;
+		Month month() const;
+		int16_t day() const;
+		Weekday weekday() const;
 
-		Date(const double time, TimeZone timeZone = TimeZone::utc) : Date(Duration(time), timeZone) { }
+		const Duration durationSinceMidnight() const;
+		bool isLeapYear();
 
-		Date(const int64_t year, const uint8_t month, const uint8_t day, const uint8_t hours = 0, const uint8_t minutes = 0, const uint8_t seconds = 0, uint64_t microseconds = 0) : Date() {
-			this->_set(year, month, day, hours, minutes, seconds, microseconds);
-		}
+		uint8_t hours() const;
+		uint8_t minutes() const;
+		uint8_t seconds() const;
+		uint32_t microseconds() const;
 
-		Date(const String& iso8601) : Date() {
+		const Duration durationSinceEpoch() const;
 
-			int64_t year = 0;
-			uint8_t month = 0;
-			uint8_t day = 0;
-			uint8_t hours = 0;
-			uint8_t minutes = 0;
-			uint8_t seconds = 0;
-			uint64_t microseconds = 0;
-			Duration timeZoneOffset;
+		Duration since(
+			const Date& other
+		) const;
 
-			auto parts = iso8601.split("T");
+		Date to(TimeZone timeZone) const;
 
-			if (parts->count() > 0) {
+		String toISO8601() const;
 
-				auto datePart = parts->itemAtIndex(0);
+		virtual Kind kind() const override;
 
-				year = datePart->substring(0, 4)->doubleValue();
+		virtual uint64_t hash() const override;
 
-				if (datePart->length() == 8) {
-					month = datePart->substring(4, 2)->doubleValue();
-					day = datePart->substring(6, 2)->doubleValue();
-				}
-				else if (datePart->length() == 10) {
-					month = datePart->substring(5, 2)->doubleValue();
-					day = datePart->substring(8, 2)->doubleValue();
-				}
-				else throw ISO8601Exception();
+		virtual bool operator==(
+			const Type& other
+		) const override;
 
-				if (parts->count() > 1) {
+		Date operator+(
+			const Duration& duration
+		) const;
 
-					auto separators = Array<String>({ "+", "-", "Z"});
+		Date operator-(
+			const Duration& duration
+		) const;
 
-					auto timeParts = parts->itemAtIndex(1)->split(separators, IncludeSeparator::prefix);
+		const Duration operator-(
+			const Date& other
+		) const;
 
-					auto timeComponentsPart = timeParts->itemAtIndex(0);
+		void operator+=(
+			const Duration& duration);
 
-					auto timeComponentsSubParts = timeComponentsPart->split(".");
+		void operator-=(
+			const Duration& duration);
 
-					if (timeComponentsSubParts->count() > 0) {
+		virtual bool operator>(
+			const Date& other
+		) const override;
 
-						auto hmsComponentParts = timeComponentsSubParts->itemAtIndex(0);
+		Date& operator=(
+			const Date& other);
 
-						hours = hmsComponentParts->substring(0, 2)->doubleValue();
-
-						if (hmsComponentParts->length() == 5) {
-							minutes = hmsComponentParts->substring(2, 2)->doubleValue();
-							seconds = hmsComponentParts->substring(4, 2)->doubleValue();
-						}
-						else if (hmsComponentParts->length() == 8) {
-							minutes = hmsComponentParts->substring(3, 2)->doubleValue();
-							seconds = hmsComponentParts->substring(6, 2)->doubleValue();
-						}
-
-						if (timeComponentsSubParts->count() > 1) {
-							microseconds = timeComponentsSubParts->itemAtIndex(1)->doubleValue();
-						}
-
-					} else throw ISO8601Exception();
-
-					if (timeParts->count() > 1 && timeParts->itemAtIndex(1)->length() > 0) {
-						timeZoneOffset = Duration::parse(timeParts->itemAtIndex(1));
-					} else throw ISO8601Exception();
-
-				}
-
-			}
-			else ISO8601Exception();
-
-			this->_set(year, month, day, hours, minutes, seconds, microseconds);
-
-			_time -= timeZoneOffset;
-
-		}
-
-		virtual ~Date() {}
-
-		int64_t year() const {
-			int64_t year;
-			_components(this->_time.days(), &year, nullptr, nullptr);
-			return year;
-		}
-
-		Month month() const {
-			uint8_t month;
-			_components(this->_time.days(), nullptr, &month, nullptr);
-			return Month(month);
-		}
-
-		int16_t day() const {
-			uint8_t day;
-			_components(this->_time.days(), nullptr, nullptr, &day);
-			return day;
-		}
-
-		Weekday weekday() const {
-			return static_cast<Weekday>(((int64_t)this->_time.days() + static_cast<int64_t>(_epochWeekday)) % daysInWeek);
-		}
-
-		const Duration durationSinceMidnight() const {
-			auto seconds = this->_time.seconds();
-			double daysSeconds = floor(this->_time.days()) * Duration::day();
-			return Duration(seconds - daysSeconds);
-		}
-
-		bool isLeapYear() {
-			return Date::isLeapYear(this->year());
-		}
-
-		uint8_t hours() const {
-			return this->durationSinceMidnight() / Duration::hour();
-		}
-
-		uint8_t minutes() const {
-			return (this->durationSinceMidnight().seconds() - (this->hours() * Duration::hour())) / Duration::minute();
-		}
-
-		uint8_t seconds() const {
-			return (this->durationSinceMidnight().seconds()) - (this->hours() * Duration::hour()) - (this->minutes() * Duration::minute());
-		}
-
-		uint32_t microseconds() const {
-			return (this->_time.seconds() - floor(this->_time.seconds())) * 1000000;
-		}
-
-		const Duration durationSinceEpoch() const {
-			return this->_time;
-		}
-
-		Duration since(const Date& other) const {
-			return this->durationSinceEpoch() - other.durationSinceEpoch();
-		}
-
-		Date to(TimeZone timeZone) const {
-			if (this->_timeZone == timeZone) return Date(*this);
-			if (timeZone == TimeZone::local) return Date(this->_time + _localOffset(), TimeZone::local);
-			return Date(this->_time - _localOffset(), TimeZone::utc);
-		}
-
-		String toISO8601() const {
-			String ret;
-			ret.append(String::format("%02lld-%02d-%02dT%02d:%02d:%02d",
-									  this->year(),
-									  this->month(),
-									  this->day(),
-									  this->hours(),
-									  this->minutes(),
-									  this->seconds()));
-			auto microseconds = this->microseconds();
-			if (microseconds != 0) {
-				ret.append(String::format(".%llu", microseconds));
-			}
-			switch (this->_timeZone) {
-				case TimeZone::utc:
-					ret.append("Z");
-					break;
-				case TimeZone::local: {
-					ret.append(_localOffset().toString(Duration::ToStringOptions::prefixPositive));
-					break;
-				}
-			}
-			return ret;
-		}
-
-		virtual Kind kind() const override {
-			return Kind::date;
-		}
-
-		virtual uint64_t hash() const override {
-			double seconds = this->_time.seconds();
-			uint64_t hash;
-			memcpy(&hash, &seconds, sizeof(uint64_t));
-			return hash;
-		}
-
-		virtual bool operator==(const Type& other) const override {
-			if (other.kind() != Kind::date) return false;
-			return this->to(TimeZone::utc)._time == ((const Date&)other).to(TimeZone::utc)._time;
-		}
-
-		Date operator+(const Duration& duration) const {
-			return Date(this->seconds() + duration.seconds());
-		}
-
-		Date operator-(const Duration& duration) const {
-			return Date(this->seconds() - duration.seconds());
-		}
-
-		const Duration operator-(const Date& other) const {
-			return this->seconds() - other.seconds();
-		}
-
-		void operator+=(const Duration& duration) {
-			_time += duration;
-		}
-
-		void operator-=(const Duration& duration) {
-			_time -= duration;
-		}
-
-		virtual bool operator>(const Date& other) const override {
-			return this->to(TimeZone::utc).durationSinceEpoch().seconds() > other.to(TimeZone::utc).durationSinceEpoch().seconds();
-		}
-
-		Date& operator=(const Date& other) {
-			Type::operator=(other);
-			this->_time = other._time;
-			this->_timeZone = other._timeZone;
-			return *this;
-		}
-
-		operator double() const {
-			return (time_t)this->_time.seconds();
-		}
+		operator double() const;
 
 	};
 
 }
 
-#endif /* date_hpp */
+#endif /* shared_foundation_date_hpp */

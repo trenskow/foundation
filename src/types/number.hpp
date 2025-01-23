@@ -1,22 +1,22 @@
 //
 // number.hpp
-// fart
+// shared-foundation-cpp
 //
 // Created by Kristian Trenskow on 2018/09/09.
 // See license in LICENSE.
 //
 
-#ifndef number_hpp
-#define number_hpp
+#ifndef shared_foundation_number_hpp
+#define shared_foundation_number_hpp
 
 #include <type_traits>
 #include <limits>
 
 #include "./type.hpp"
 #include "./comparable.hpp"
-#include "./string.h"
+#include "./string.hpp"
 
-namespace fart::types {
+namespace games::zerobit::shared::foundation::types {
 
 	class Numeric : public Type {
 
@@ -216,4 +216,4 @@ namespace fart::types {
 
 }
 
-#endif /* number_hpp */
+#endif /* shared_foundation_number_hpp */

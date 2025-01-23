@@ -1,43 +1,40 @@
 //
 // null.hpp
-// fart
+// shared-foundation-cpp
 //
 // Created by Kristian Trenskow on 2020/04/01.
 // See license in LICENSE.
 //
 
-#ifndef null_hpp
-#define null_hpp
+#ifndef shared_foundation_null_hpp
+#define shared_foundation_null_hpp
 
 #include "type.hpp"
 
-namespace fart::types {
+namespace games::zerobit::shared::foundation::types {
 
 	class Null: public Type {
 
 	public:
 
-		static bool is(const Type* value) {
-			return value == nullptr || value->kind() == Type::Kind::null;
-		}
+		static bool is(
+			const Type* value);
 
-		Null() : Type() { }
-		Null(nullptr_t) : Type() { }
+		Null();
 
-		static Type::Kind typeKind() {
-			return Type::Kind::null;
-		}
+		Null(
+			nullptr_t);
 
-		virtual Kind kind() const override {
-			return Kind::null;
-		}
+		static Type::Kind typeKind();
 
-		virtual bool operator==(const Type& other) const override {
-			return other.kind() == Kind::null;
-		}
+		virtual Kind kind() const override;
+
+		virtual bool operator==(
+			const Type& other
+		) const override;
 
 	};
 
 }
 
-#endif /* null_hpp */
+#endif /* shared_foundation_null_hpp */
