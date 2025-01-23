@@ -16,7 +16,6 @@ As of time of writing, Foundation supports the following.
 * Types
   * String
     * Full Unicode support
-    * UTF-8 support
     * UTF-16 support
     * UTF-32 support (internal storage format)
   * Dictionary
@@ -34,11 +33,11 @@ As of time of writing, Foundation supports the following.
   * Number
     * Memory managed wrapper for primitive types
 * JSON serialization/deserialization
-  * Test suites are available through the [fart-json-test](https://github.com/trenskow/fart-json-test) repository.
+  * Passes all tests in [nst/JSONTestSuite](https://github.com/nst/JSONTestSuite) (as of 2023).
 
 ## Why
 
-Because of the challenge.
+Because I'm not the biggest fan of the C++ standard library and I couldn't resist the challenge.
 
 ## How to Use
 
