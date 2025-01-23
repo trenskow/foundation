@@ -1,6 +1,6 @@
 //
 // hashable.cpp
-// foundation-cpp
+// foundation
 //
 // Created by Kristian Trenskow on 2022/01/22.
 // See license in LICENSE.

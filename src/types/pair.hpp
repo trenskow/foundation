@@ -1,7 +1,7 @@
 
 //
 // pair.hpp
-// foundation-cpp
+// foundation
 //
 // Created by Kristian Trenskow on 2021/01/24.
 // See license in LICENSE.

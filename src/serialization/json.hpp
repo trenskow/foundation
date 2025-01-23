@@ -1,6 +1,6 @@
 //
 // json.hpp
-// foundation-cpp
+// foundation
 //
 // Created by Kristian Trenskow on 2020/04/01.
 // See license in LICENSE.

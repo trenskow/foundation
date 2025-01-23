@@ -1,6 +1,6 @@
 //
 // string.hpp
-// foundation-cpp
+// foundation
 //
 // Created by Kristian Trenskow on 2018/08/17.
 // See license in LICENSE.

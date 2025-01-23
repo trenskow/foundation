@@ -1,6 +1,6 @@
 //
 // comparison.hpp
-// foundation-cpp
+// foundation
 //
 // Created by Kristian Trenskow on 2023/01/21.
 // See license in LICENSE.

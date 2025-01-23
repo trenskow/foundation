@@ -1,6 +1,6 @@
 //
 // FoundationCxx.h
-// 0-bit-games-shared-cpp
+// foundation
 //
 // Created by Kristian Trenskow on 2023/10/07
 // See license in LICENSE.

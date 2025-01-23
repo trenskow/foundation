@@ -1,6 +1,6 @@
 //
 // uuid.cpp
-// foundation-cpp
+// foundation
 //
 // Created by Kristian Trenskow on 2022/08/28.
 // See license in LICENSE.

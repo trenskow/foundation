@@ -1,6 +1,6 @@
 //
 // dictionary.hpp
-// foundation-cpp
+// foundation
 //
 // Created by Kristian Trenskow on 2018/09/09.
 // See license in LICENSE.

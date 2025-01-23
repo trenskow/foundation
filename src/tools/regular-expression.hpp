@@ -1,6 +1,6 @@
 //
 // regular-expression.hpp
-// foundation-cpp
+// foundation
 //
 // Created by Kristian Trenskow on 2024/09/08.
 // See license in LICENSE.

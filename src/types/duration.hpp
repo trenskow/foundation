@@ -1,5 +1,5 @@
 // duration.hpp
-// foundation-cpp
+// foundation
 //
 // Created by Kristian Trenskow on 2020/04/04.
 // See license in LICENSE.

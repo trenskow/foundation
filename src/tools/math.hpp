@@ -1,6 +1,6 @@
 //
 // math.hpp
-// foundation-cpp
+// foundation
 //
 // Created by Kristian Trenskow on 2020/04/05.
 // See license in LICENSE.

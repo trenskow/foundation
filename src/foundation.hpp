@@ -1,6 +1,6 @@
 //
 // foundation.hpp
-// foundation-cpp
+// foundation
 //
 // Created by Kristian Trenskow on 2019/12/14.
 // See license in LICENSE.

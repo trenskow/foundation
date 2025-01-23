@@ -1,6 +1,6 @@
 //
 // allocator.cpp
-// foundation-cpp
+// foundation
 //
 // Created by Kristian Trenskow on 2025/01/22.
 // See license in LICENSE.

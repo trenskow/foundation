@@ -1,6 +1,6 @@
 //
 // system.hpp
-// foundation-cpp
+// foundation
 //
 // Created by Kristian Trenskow on 2020/04/03.
 // See license in LICENSE.

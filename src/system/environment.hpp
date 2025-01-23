@@ -1,6 +1,6 @@
 //
 // environment.hpp
-// foundation-cpp
+// foundation
 //
 // Created by Kristian Trenskow on 2021/01/16.
 // See license in LICENSE.

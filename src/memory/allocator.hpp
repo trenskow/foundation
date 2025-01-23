@@ -1,6 +1,6 @@
 //
 // allocator.hpp
-// foundation-cpp
+// foundation
 //
 // Created by Kristian Trenskow on 2021/07/19.
 // See license in LICENSE.

@@ -1,6 +1,6 @@
 //
 // type.cpp
-// foundation-cpp
+// foundation
 //
 // Created by Kristian Trenskow on 2018/09/10.
 // See license in LICENSE.

@@ -1,6 +1,6 @@
 //
 // url.cpp
-// foundation-cpp
+// foundation
 //
 // Created by Kristian Trenskow on 2025/01/23.
 // See license in LICENSE.

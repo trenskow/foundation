@@ -2,7 +2,7 @@
 
 //
 // Package.swift
-// foundation-cpp
+// foundation
 //
 // Created by Kristian Trenskow on 2023/10/07
 // See license in LICENSE.
