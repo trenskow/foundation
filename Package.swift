@@ -23,8 +23,7 @@ let package = Package(
 			path: ".",
 			exclude: [
 				"README.md",
-				"LICENSE",
-				"build/"
+				"LICENSE"
 			],
 			publicHeadersPath: "./include",
 			swiftSettings: [
