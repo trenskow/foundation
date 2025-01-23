@@ -1,6 +1,6 @@
 //
 // hashable.hpp
-// fart
+// foundation-cpp
 //
 // Created by Kristian Trenskow on 2018/09/09.
 // See license in LICENSE.
