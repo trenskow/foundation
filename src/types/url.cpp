@@ -62,7 +62,7 @@ String URL::escapeEncode(
 Strong<URL> URL::cwd() {
 	return fromString(
 		String::fromCString([](char* buffer, size_t length) {
-			(void)getcwd(buffer, length);
+			buffer = getcwd(buffer, length);
 			return strlen(buffer);
 		}, 4096)
 		.mapCString<String>([](const char* cwd) {
