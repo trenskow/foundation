@@ -102,7 +102,13 @@ namespace foundation::serialization {
 
 	private:
 
-		Data<void*> _references;
+		static bool _isStringifyable(
+			const Type& data,
+			Data<void*> references);
+
+		Strong<String> _stringify(
+			const Type& data,
+			Data<void*>& references);
 
 	};
 
