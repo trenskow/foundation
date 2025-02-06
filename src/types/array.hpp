@@ -637,6 +637,16 @@ namespace foundation::types {
 
 	};
 
+	template<typename T>
+	inline bool operator==(const Type& lhs, const Array<T>& rhs) {
+		return lhs.operator==(rhs);
+	}
+
+	template<typename T>
+	inline bool operator==(const Array<T>& lhs, const Array<T>& rhs) {
+		return lhs.operator==(rhs);
+	}
+
 }
 
 #endif /* foundation_array_hpp */

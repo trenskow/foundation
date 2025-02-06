@@ -63,6 +63,14 @@ namespace foundation::types {
 
 	};
 
+	inline bool operator==(const Type& lhs, const UUID& rhs) {
+		return rhs.operator==(lhs);
+	}
+
+	inline bool operator==(const UUID& lhs, const UUID& rhs) {
+		return lhs.operator==(rhs);
+	}
+
 }
 
 #endif /* foundation_uuid_hpp */

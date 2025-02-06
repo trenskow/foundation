@@ -353,10 +353,10 @@ bool URL::operator==(
 }
 
 uint16_t URL::_schemaDefaultPort() const {
-	if (this->_scheme == "http") return 80;
-	if (this->_scheme == "https") return 443;
-	if (this->_scheme == "ftp") return 21;
-	if (this->_scheme == "telnet") return 23;
-	if (this->_scheme == "ssh") return 22;
+	if (this->_scheme == String("http")) return 80;
+	if (this->_scheme == String("https")) return 443;
+	if (this->_scheme == String("ftp")) return 21;
+	if (this->_scheme == String("telnet")) return 23;
+	if (this->_scheme == String("ssh")) return 22;
 	return 0;
 }
