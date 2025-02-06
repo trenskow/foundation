@@ -93,12 +93,6 @@ bool UUID::operator==(
 	return this->_lower == ((const UUID&)other)._lower && this->_upper == ((const UUID&)other)._upper;
 }
 
-bool UUID::operator!=(
-	const UUID& other
-) const {
-	return !(*this == other);
-}
-
 UUID& UUID::operator=(
 	const UUID& other
 ) {

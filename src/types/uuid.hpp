@@ -39,10 +39,6 @@ namespace foundation::types {
 			const Type& other
 		) const override;
 
-		bool operator!=(
-			const UUID& other
-		) const;
-
 		UUID& operator=(
 			const UUID& other);
 
@@ -62,14 +58,6 @@ namespace foundation::types {
 		uint64_t _upper;
 
 	};
-
-	inline bool operator==(const Type& lhs, const UUID& rhs) {
-		return rhs.operator==(lhs);
-	}
-
-	inline bool operator==(const UUID& lhs, const UUID& rhs) {
-		return lhs.operator==(rhs);
-	}
 
 }
 

@@ -457,7 +457,15 @@ bool String::operator==(
 bool String::operator>(
 	const String& other
 ) const {
-	return this->lowercased()->_storage > other.lowercased()->_storage;
+
+	for (size_t idx = 0 ; idx < math::min(this->length(), other.length()) ; idx++) {
+		if (this->operator[](idx) > other[idx]) return true;
+		if (this->operator[](idx) == other[idx]) continue;
+		break;
+	}
+
+	return false;
+
 }
 
 uint32_t String::operator[](
