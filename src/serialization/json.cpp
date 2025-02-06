@@ -415,22 +415,26 @@ bool JSON::_isStringifyable(
 		return false;
 	}
 
+	Data<void*> referencesNested = references
+		.appending((void*)&data);
+
 	switch (data.kind()) {
 		case Type::Kind::dictionary: {
+
 			const Dictionary<Type, Type>& dictionary = data.as<Dictionary<Type, Type>>();
+
 			return dictionary.keys()->every([&](const Type& type) {
 				return type.is(Type::Kind::string);
 			}) && _isStringifyable(
 				dictionary.values(),
-				references
-					.appending((void*)&data));
+				referencesNested);
+
 		}
 		case Type::Kind::array: {
 			return data.as<Array<Type>>().every([&](const Type& data) {
 				return _isStringifyable(
 					data,
-					references
-						.appending((void*)&data));
+					referencesNested);
 			});
 		}
 		case Type::Kind::string:
@@ -450,6 +454,13 @@ Strong<String> JSON::_stringify(
 	Data<void*>& references
 ) {
 
+	if (references.contains((void*)&data)) {
+		throw JSONEncodingCircularReferenceException();
+	}
+
+	Data<void*> referencesNested = references
+		.appending((void*)&data);
+
 	Strong<String> result;
 
 	switch (data.kind()) {
@@ -459,14 +470,12 @@ Strong<String> JSON::_stringify(
 
 			auto dictionary = data.as<Dictionary<Type, Type>>();
 
-			if (references.contains(&dictionary)) throw JSONEncodingCircularReferenceException();
-
 			result->append(String::join(dictionary.keys()->map<String>([&](const Type& key) {
 				if (key.kind() != Type::Kind::string) throw EncoderTypeException();
 				Strong<String> result;
-				result->append(this->_stringify(key, references.appending(&dictionary)));
+				result->append(this->_stringify(key, referencesNested));
 				result->append(":");
-				result->append(this->_stringify(dictionary.get(key), references.appending(&dictionary)));
+				result->append(this->_stringify(dictionary.get(key), referencesNested));
 				return result;
 			}), ","));
 
@@ -478,12 +487,10 @@ Strong<String> JSON::_stringify(
 
 			Array<Type>& array = data.as<Array<Type>>();
 
-			if (references.contains(&array)) throw JSONEncodingCircularReferenceException();
-
 			result->append("[");
 
 			result->append(String::join(array.map<String>([&](const Type& item) {
-				return this->_stringify(item, references.appending(&array));
+				return this->_stringify(item, referencesNested);
 			}), ","));
 
 			result->append("]");
@@ -559,13 +566,13 @@ Strong<String> JSON::_stringify(
 				data.as<Date>()
 					.to(Date::TimeZone::utc)
 					.toISO8601(),
-				references);
+				referencesNested);
 			break;
 		case Type::Kind::uuid:
 			return this->_stringify(
 				data.as<UUID>()
 					.string(),
-					references);
+					referencesNested);
 		default:
 			throw EncoderTypeException();
 	}
