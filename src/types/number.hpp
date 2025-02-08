@@ -71,7 +71,7 @@ namespace foundation::types {
 
 							double value = (double)numeric_limits<T>::min();
 
-							if (boundary == String()) {
+							if (boundary == "") {
 								if (idx == 1) value = (double)numeric_limits<T>::max();
 							} else {
 								value = (double)((T)boundary.doubleValue());
@@ -181,7 +181,7 @@ namespace foundation::types {
 			return Number<T>::getValue(other) == Number<T>::getValue(*this);
 		}
 
-		bool operator>(const Number<T>& other) const override {
+		virtual bool operator>(const Number<T>& other) const override {
 			return _value > other._value;
 		}
 

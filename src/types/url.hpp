@@ -93,14 +93,6 @@ namespace foundation::types {
 
 	};
 
-	inline bool operator==(const Type& lhs, const URL& rhs) {
-		return rhs.operator==(lhs);
-	}
-
-	inline bool operator==(const URL& lhs, const URL& rhs) {
-		return lhs.operator==(rhs);
-	}
-
 }
 
 #endif /* foundation_url_hpp */

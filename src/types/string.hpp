@@ -309,27 +309,6 @@ namespace foundation::types {
 
 	};
 
-	inline bool operator==(
-		const Type& lhs,
-		const String& rhs
-	) {
-		return lhs.operator==(rhs);
-	}
-
-	inline bool operator==(
-		const String& lhs,
-		const char* rhs
-	) {
-		return lhs.operator==(rhs);
-	}
-
-	inline bool operator==(
-		const String& lhs,
-		const String& rhs
-	) {
-		return lhs.operator==(rhs);
-	}
-
 }
 
 #endif /* foundation_string_hpp */
