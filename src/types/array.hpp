@@ -492,7 +492,7 @@ namespace foundation::types {
 		}
 
 		inline Strong<Array<T>> unique() const {
-			return this->unique([](const T& item1, const T& item2) { return item1 == item2; });
+			return this->unique([](const T& item1, const T& item2) { return item1.equals(item2); });
 		}
 
 		inline Strong<Array<T>> nonUnique(const Comparer& comparer) const {
