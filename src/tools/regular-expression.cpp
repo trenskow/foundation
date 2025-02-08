@@ -20,7 +20,7 @@ RegularExpression::RegularExpression(
 
 	int flags = REG_EXTENDED;
 
-	if (pattern.length() < 2 || !pattern.substring(0, 1)->equals(String("/"))) {
+	if (pattern.length() < 2 || !pattern.substring(0, 1)->equals("/")) {
 		throw InvalidPatternException();
 	}
 

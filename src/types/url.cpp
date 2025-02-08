@@ -295,7 +295,7 @@ Strong<URL> URL::appendingPath(
 				if (component.length() == 0) {
 					result = Array<String>({ "" });
 				}
-				else if (component.equals(String(Data<uint8_t>(component.length(), '.')))) {
+				else if (component.equals(Data<uint8_t>(component.length(), '.'))) {
 					for (size_t idx = 1 ; result.count() > 1 && idx < component.length() ; idx++) {
 						result = result.removingItemAtIndex(result.count() - 1);
 					}

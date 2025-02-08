@@ -71,7 +71,7 @@ namespace foundation::types {
 
 							double value = (double)numeric_limits<T>::min();
 
-							if (boundary.equals(String(""))) {
+							if (boundary.equals("")) {
 								if (idx == 1) value = (double)numeric_limits<T>::max();
 							} else {
 								value = (double)((T)boundary.doubleValue());
