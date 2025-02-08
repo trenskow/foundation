@@ -586,13 +586,13 @@ namespace foundation::types {
 
 			if (other.kind() != Kind::array) return false;
 
-			const Array<T>& otherArray = (const Array<T>&)other;
+			const Array<T> otherArray = (const Array<T>&)other;
 
 			if (this->count() != otherArray.count()) return false;
 
 			if constexpr (std::is_base_of<Hashable, T>::value) {
 				for (size_t idx = 0 ; idx < _storage.length() ; idx++) {
-					if (!(*this->_storage[idx] == *otherArray._storage[idx])) return false;
+					if (!(*_storage[idx] == *otherArray._storage[idx])) return false;
 				}
 			} else {
 				return true;
@@ -600,6 +600,10 @@ namespace foundation::types {
 
 			return true;
 
+		}
+
+		bool operator!=(const Array<T>& other) const {
+			return !(this->operator==(other));
 		}
 
 		Array<T>& operator=(const Array<T>& other) {
@@ -632,6 +636,16 @@ namespace foundation::types {
 		}
 
 	};
+
+	template<typename T>
+	inline bool operator==(const Type& lhs, const Array<T>& rhs) {
+		return lhs.operator==(rhs);
+	}
+
+	template<typename T>
+	inline bool operator==(const Array<T>& lhs, const Array<T>& rhs) {
+		return lhs.operator==(rhs);
+	}
 
 }
 

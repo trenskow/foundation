@@ -39,7 +39,7 @@ namespace foundation::types {
 	class Array;
 
 	template<typename T = uint8_t>
-	class Data : public Type {
+	class Data : public Type, public Comparable<Data<T>> {
 
 	public:
 
@@ -639,6 +639,17 @@ namespace foundation::types {
 			if (other.kind() != Kind::data) return false;
 			if (this->_size != ((const Data<>&)other).size()) return false;
 			return this->equals((const Data<T>&)other);
+		}
+
+		virtual bool operator>(const Data<T>& other) const override {
+			for (size_t idx = 0 ; idx < this->length() ; idx++) {
+				if (idx >= other.length()) return true;
+				T left = this->_get(idx);
+				T right = other._get(idx);
+				if (left < right) return false;
+				if (left > right) return true;
+			}
+			return false;
 		}
 
 		Data& operator=(const Data<T>& other) {
