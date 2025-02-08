@@ -258,7 +258,7 @@ namespace foundation::types {
 
 		inline void removeItem(const T& item1) noexcept(false) {
 			return removeItem([&item1](T& item2) {
-				return item1 == item2;
+				return item1.equals(item2);
 			});
 		}
 
