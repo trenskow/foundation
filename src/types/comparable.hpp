@@ -37,8 +37,8 @@ namespace foundation::types {
 			}
 
 			Comparison compareTo(const T& other) const {
-				if (this->operator>(other)) return Comparison::biggerThan;
-				if (other.operator>((T&)*this)) return Comparison::lessThan;
+				if (this->greaterThan(other)) return Comparison::biggerThan;
+				if (other.greaterThan((T&)*this)) return Comparison::lessThan;
 				return Comparison::equals;
 			}
 
