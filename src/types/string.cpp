@@ -57,8 +57,8 @@ String::String(
 
 	if (data.length() > 1) {
 		Strong<Data<uint8_t>> potentialMarker = data.subdata(0, 2)->as<uint8_t>();
-		if (*potentialMarker == bigEndianBOM || *potentialMarker == littleEndianBOM) {
-			endian = *potentialMarker == bigEndianBOM ? Endian::Variant::big : Endian::Variant::little;
+		if (potentialMarker->equals(bigEndianBOM) || potentialMarker->equals(littleEndianBOM)) {
+			endian = potentialMarker->equals(bigEndianBOM) ? Endian::Variant::big : Endian::Variant::little;
 			parseData = parseData->subdata(2);
 		}
 	}
@@ -441,23 +441,23 @@ Type::Kind String::kind() const {
 	return Kind::string;
 }
 
-bool String::operator==(
+bool String::equals(
 	const Type& other
 ) const {
 	if (!other.is(Type::Kind::string)) return false;
-	return _storage == ((const String&)other)._storage;
+	return _storage.equals(((const String&)other)._storage);
 }
 
-bool String::operator==(
+bool String::equals(
 	const char* other
 ) const {
-	return *this == String(other);
+	return this->equals(String(other));
 }
 
-bool String::operator>(
+bool String::greaterThan(
 	const String& other
 ) const {
-	return this->lowercased()->_storage > other.lowercased()->_storage;
+	return this->lowercased()->_storage.greaterThan(other.lowercased()->_storage);
 }
 
 uint32_t String::operator[](

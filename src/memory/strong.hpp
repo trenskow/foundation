@@ -139,22 +139,13 @@ namespace foundation::memory {
 			return _object;
 		}
 
-		bool operator==(std::nullptr_t) const {
+		bool operator==(std::nullptr_t) const = delete;
+		bool operator!=(std::nullptr_t) const = delete;
+		bool operator==(const T& other) const = delete;
+		bool operator!=(const T& other) const = delete;
+
+		bool equals(std::nullptr_t) const {
 			return this->_object == nullptr;
-		}
-
-		bool operator!=(std::nullptr_t) const {
-			return !(this->_object == nullptr);
-		}
-
-		bool operator==(const T& other) const {
-			if (this->_object == nullptr) return false;
-			return *this->_object == other;
-		}
-
-		bool operator!=(const T& other) const {
-			if (this->_object == nullptr) return true;
-			return *this->_object != other;
 		}
 
 		template<typename O>

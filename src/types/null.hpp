@@ -29,7 +29,11 @@ namespace foundation::types {
 
 		virtual Kind kind() const override;
 
-		virtual bool operator==(
+		bool operator==(
+			const Type& other
+		) const = delete;
+
+		virtual bool equals(
 			const Type& other
 		) const override;
 

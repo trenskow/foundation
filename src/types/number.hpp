@@ -71,7 +71,7 @@ namespace foundation::types {
 
 							double value = (double)numeric_limits<T>::min();
 
-							if (boundary == "") {
+							if (boundary.equals(String(""))) {
 								if (idx == 1) value = (double)numeric_limits<T>::max();
 							} else {
 								value = (double)((T)boundary.doubleValue());
@@ -176,12 +176,15 @@ namespace foundation::types {
 			return (uint64_t)_value;
 		}
 
-		virtual bool operator==(const Type& other) const override {
+		bool operator==(const Type& other) const = delete;
+		bool operator>(const Number<T>& other) const = delete;
+
+		virtual bool equals(const Type& other) const override {
 			if (other.kind() != Type::Kind::number) return false;
 			return Number<T>::getValue(other) == Number<T>::getValue(*this);
 		}
 
-		virtual bool operator>(const Number<T>& other) const override {
+		virtual bool greaterThan(const Number<T>& other) const override {
 			return _value > other._value;
 		}
 

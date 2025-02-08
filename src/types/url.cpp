@@ -166,15 +166,15 @@ Strong<URL> URL::fromString(
 
 	}
 
-	if (userInfo != nullptr) {
+	if (!userInfo.equals(nullptr)) {
 		userInfo = escapeDecode(userInfo);
 	}
 
-	if (host != nullptr) {
+	if (!host.equals(nullptr)) {
 		host = escapeDecode(host);
 	}
 
-	if (fragment != nullptr) {
+	if (!fragment.equals(nullptr)) {
 		fragment = escapeDecode(fragment);
 	}
 
@@ -209,8 +209,8 @@ URL::URL(
 	Array<Array<String>> query,
 	Strong<String> fragment
 )  : _scheme(scheme),
-	_userInfo(userInfo != nullptr ? userInfo : nullptr),
-	_host(host != nullptr ? host : nullptr),
+	_userInfo(!userInfo.equals(nullptr) ? userInfo : nullptr),
+	_host(!host.equals(nullptr) ? host : nullptr),
 	_port(port),
 	_path(path
 		.split("/")
@@ -221,7 +221,7 @@ URL::URL(
 			return escapeDecode(component);
 		})),
 	_query(query),
-	_fragment(fragment != nullptr ? fragment : nullptr) { }
+	_fragment(!fragment.equals(nullptr) ? fragment : nullptr) { }
 
 Type::Kind URL::kind() const {
 	return Kind::url;
@@ -260,7 +260,7 @@ String URL::valueForQueryKey(
 
 	Strong<Array<Array<String>>> queryParts = this->_query
 		.filter([&](const Array<String>& parts) {
-			return parts[0] == key;
+			return parts[0]->equals(key);
 		});
 
 	if (queryParts->count() == 0) return nullptr;
@@ -295,7 +295,7 @@ Strong<URL> URL::appendingPath(
 				if (component.length() == 0) {
 					result = Array<String>({ "" });
 				}
-				else if (component == String(Data<uint8_t>(component.length(), '.'))) {
+				else if (component.equals(String(Data<uint8_t>(component.length(), '.')))) {
 					for (size_t idx = 1 ; result.count() > 1 && idx < component.length() ; idx++) {
 						result = result.removingItemAtIndex(result.count() - 1);
 					}
@@ -315,11 +315,11 @@ Strong<URL> URL::relativeTo(
 	const URL& baseUrl
 ) const {
 
-	if (this->_scheme != baseUrl._scheme) {
+	if (!this->_scheme.equals(baseUrl._scheme)) {
 		return *this;
 	}
 
-	if (*this->_host.def(Strong<String>("")) != baseUrl._host.def(Strong<String>(""))) {
+	if (this->_host.def(Strong<String>(""))->equals(baseUrl._host.def(Strong<String>("")))) {
 		return *this;
 	}
 
@@ -338,25 +338,25 @@ Strong<URL> URL::relativeTo(
 
 }
 
-bool URL::operator==(
+bool URL::equals(
 	const Type& other
 ) const {
 	if (other.kind() != Kind::url) return false;
 	const URL& otherUrl = (const URL&)other;
-	return this->_scheme == otherUrl._scheme &&
-		(this->_userInfo == otherUrl._userInfo || (this->_userInfo != nullptr && otherUrl._userInfo != nullptr && *this->_userInfo == *otherUrl._userInfo)) &&
-		(this->_host == otherUrl._host || (this->_host != nullptr && otherUrl._host != nullptr && *this->_host == *otherUrl._host)) &&
+	return this->_scheme.equals(otherUrl._scheme) &&
+		((this->_userInfo.equals(nullptr) && otherUrl._userInfo.equals(nullptr)) || (!this->_userInfo.equals(nullptr) && !otherUrl._userInfo.equals(nullptr) && this->_userInfo->equals(*otherUrl._userInfo))) &&
+		((this->_host.equals(nullptr) && otherUrl._host.equals(nullptr)) || (!this->_host.equals(nullptr) && !otherUrl._host.equals(nullptr) && this->_host->equals(*otherUrl._host))) &&
 		this->_port == otherUrl._port &&
-		this->_path == otherUrl._path &&
-		this->_query == otherUrl._query &&
-		(this->_fragment == otherUrl._fragment || (this->_fragment != nullptr && otherUrl._fragment != nullptr && *this->_fragment == *otherUrl._fragment));
+		this->_path.equals(otherUrl._path) &&
+		this->_query.equals(otherUrl._query) &&
+		((this->_fragment.equals(nullptr) && otherUrl._fragment.equals(nullptr)) || (!this->_fragment.equals(nullptr) && !otherUrl._fragment->equals(nullptr) && this->_fragment->equals(*otherUrl._fragment)));
 }
 
 uint16_t URL::_schemaDefaultPort() const {
-	if (this->_scheme == "http") return 80;
-	if (this->_scheme == "https") return 443;
-	if (this->_scheme == "ftp") return 21;
-	if (this->_scheme == "telnet") return 23;
-	if (this->_scheme == "ssh") return 22;
+	if (this->_scheme.equals("http")) return 80;
+	if (this->_scheme.equals("https")) return 443;
+	if (this->_scheme.equals("ftp")) return 21;
+	if (this->_scheme.equals("telnet")) return 23;
+	if (this->_scheme.equals("ssh")) return 22;
 	return 0;
 }

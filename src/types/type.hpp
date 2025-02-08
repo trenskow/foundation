@@ -60,11 +60,15 @@ namespace foundation::types {
 		Type& operator=(
 			Type&& other);
 
-		virtual bool operator==(
+		bool operator==(
 			const Type& other
-		) const;
+		) const = delete;
 
-		virtual bool operator!=(
+		bool operator!=(
+			const Type& other
+		) const = delete;
+
+		virtual bool equals(
 			const Type& other
 		) const;
 

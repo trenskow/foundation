@@ -309,7 +309,7 @@ namespace foundation::types {
 
 		inline size_t indexOf(const T& item) const {
 			return indexOf([&item](const T& stored) {
-				return stored == item;
+				return stored.equals(item);
 			});
 		}
 
@@ -582,7 +582,10 @@ namespace foundation::types {
 			return Kind::array;
 		}
 
-		virtual bool operator==(const Type& other) const override {
+		bool operator==(const Type& other) const = delete;
+		bool operator!=(const Array<T>& other) const  = delete;
+
+		virtual bool equals(const Type& other) const override {
 
 			if (other.kind() != Kind::array) return false;
 
@@ -592,7 +595,7 @@ namespace foundation::types {
 
 			if constexpr (std::is_base_of<Hashable, T>::value) {
 				for (size_t idx = 0 ; idx < _storage.length() ; idx++) {
-					if (!(*_storage[idx] == *otherArray._storage[idx])) return false;
+					if (!(_storage[idx]->equals(*otherArray._storage[idx]))) return false;
 				}
 			} else {
 				return true;
@@ -600,10 +603,6 @@ namespace foundation::types {
 
 			return true;
 
-		}
-
-		bool operator!=(const Array<T>& other) const {
-			return !(this->operator==(other));
 		}
 
 		Array<T>& operator=(const Array<T>& other) {

@@ -336,11 +336,17 @@ uint64_t Date::hash() const {
 	return hash;
 }
 
-bool Date::operator==(
+bool Date::equals(
 	const Type& other
 ) const {
 	if (other.kind() != Kind::date) return false;
-	return this->to(TimeZone::utc)._time == ((const Date&)other).to(TimeZone::utc)._time;
+	return this->to(TimeZone::utc)._time.equals(((const Date&)other).to(TimeZone::utc)._time);
+}
+
+bool Date::greaterThan(
+	const Date& other
+) const {
+	return this->to(TimeZone::utc)._time.greaterThan(((const Date&)other).to(TimeZone::utc)._time);
 }
 
 Date Date::operator+(
@@ -371,12 +377,6 @@ void Date::operator-=(
 	const Duration& duration
 ) {
 	this->_time -= duration;
-}
-
-bool Date::operator>(
-	const Date& other
-) const	{
-	return this->to(TimeZone::utc).durationSinceEpoch().seconds() > other.to(TimeZone::utc).durationSinceEpoch().seconds();
 }
 
 Date& Date::operator=(

@@ -35,13 +35,17 @@ namespace foundation::types {
 
 		virtual uint64_t hash() const override;
 
-		virtual bool operator==(
+		bool operator==(
 			const Type& other
-		) const override;
+		) const = delete;
 
 		bool operator!=(
 			const UUID& other
-		) const;
+		) const = delete;
+
+		virtual bool equals(
+			const Type& other
+		) const override;
 
 		UUID& operator=(
 			const UUID& other);

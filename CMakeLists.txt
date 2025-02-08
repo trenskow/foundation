@@ -6,7 +6,7 @@ if(NOT CMAKE_BUILD_TYPE)
 	set(CMAKE_BUILD_TYPE Release)
 endif()
 
-set(CMAKE_CXX_FLAGS "-Wall -Wextra -Werror -Wno-vla-extension")
+set(CMAKE_CXX_FLAGS "-Wall -Wextra -Werror -Wno-vla-extension -std=c++20")
 set(CMAKE_CXX_FLAGS_DEBUG "-g")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 
@@ -40,4 +40,4 @@ set_target_properties(foundation
 	LIBRARY_OUTPUT_DIRECTORY "${ARCH_OUTPUT_DIR}/lib"
 	RUNTIME_OUTPUT_DIRECTORY "${ARCH_OUTPUT_DIR}/bin")
 
-target_compile_features(foundation PRIVATE cxx_std_17)
+target_compile_features(foundation PRIVATE cxx_std_20)

@@ -34,17 +34,11 @@ Type& Type::operator=(
 	return *this;
 }
 
-bool Type::operator==(
+bool Type::equals(
 	const Type& other
 ) const {
 	if (this->kind() != other.kind()) return false;
 	return this->hash() == other.hash();
-}
-
-bool Type::operator!=(
-	const Type& other
-) const {
-	return !(*this == other);
 }
 
 bool Type::is(

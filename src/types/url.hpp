@@ -75,7 +75,11 @@ namespace foundation::types {
 			const URL& baseUrl
 		) const;
 
-		virtual bool operator==(
+		bool operator==(
+			const Type& other
+		) const = delete;
+
+		virtual bool equals(
 			const Type& other
 		) const override;
 

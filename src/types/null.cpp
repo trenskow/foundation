@@ -30,7 +30,7 @@ Type::Kind Null::kind() const {
 	return Kind::null;
 }
 
-bool Null::operator==(
+bool Null::equals(
 	const Type& other
 ) const {
 	return other.kind() == Kind::null;

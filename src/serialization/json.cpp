@@ -290,7 +290,7 @@ Strong<Type> JSON::_parseLiteral(
 	switch (string[*idx]) {
 		case 't':
 			this->_ensureLength(string, idx, 4, *line, *character);
-			if (*string.substring(*idx, 4) != trueLiteral) {
+			if (string.substring(*idx, 4)->equals(trueLiteral)) {
 				throw JSONMalformedException(*line, *character);
 			}
 			(*idx) += 4;
@@ -298,7 +298,7 @@ Strong<Type> JSON::_parseLiteral(
 			return Strong<types::Boolean>(true).as<Type>();
 		case 'f':
 			this->_ensureLength(string, idx, 5, *line, *character);
-			if (*string.substring(*idx, 5) != falseLiteral) {
+			if (string.substring(*idx, 5)->equals(falseLiteral)) {
 				throw JSONMalformedException(*line, *character);
 			}
 			(*idx) += 5;
@@ -306,7 +306,7 @@ Strong<Type> JSON::_parseLiteral(
 			return Strong<types::Boolean>(false).as<Type>();
 		case 'n':
 			this->_ensureLength(string, idx, 4, *line, *character);
-			if (*string.substring(*idx, 4) != nullLiteral) {
+			if (string.substring(*idx, 4)->equals(nullLiteral)) {
 				throw JSONMalformedException(*line, *character);
 			}
 			(*idx) += 4;

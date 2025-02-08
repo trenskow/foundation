@@ -635,13 +635,16 @@ namespace foundation::types {
 			return true;
 		}
 
-		bool operator==(const Type& other) const override {
+		bool operator==(const Type& other) const = delete;
+		bool operator>(const Data<T>& other) const = delete;
+
+		virtual bool equals(const Type& other) const override {
 			if (other.kind() != Kind::data) return false;
 			if (this->_size != ((const Data<>&)other).size()) return false;
 			return this->equals((const Data<T>&)other);
 		}
 
-		virtual bool operator>(const Data<T>& other) const override {
+		virtual bool greaterThan(const Data<T>& other) const override {
 			for (size_t idx = 0 ; idx < this->length() ; idx++) {
 				if (idx >= other.length()) return true;
 				T left = this->_get(idx);

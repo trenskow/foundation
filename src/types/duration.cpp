@@ -51,22 +51,22 @@ const Duration& Duration::year(bool isLeapYear) {
 }
 
 Duration Duration::parse(const String& string) {
-	if (string == "Z") return Duration::zero();
+	if (string.equals(String("Z"))) return Duration::zero();
 
 	String parse = string;
 	if (parse.length() == 0) throw DurationParserException();
 
 	double multiplier = 1;
 	auto prefix = parse.substring(0, 1);
-	if (*prefix == "+" || *prefix == "-") {
-		multiplier = (*prefix == "-" ? -1 : 1);
+	if (prefix->equals(String("+")) || prefix->equals(String("-"))) {
+		multiplier = (prefix->equals(String("-")) ? -1 : 1);
 		parse = parse.substring(1);
 	}
 
 	uint64_t hours = 0;
 	uint64_t minutes = 0;
 
-	if (parse.length() == 5 && *parse.substring(2, 1) == ":") {
+	if (parse.length() == 5 && parse.substring(2, 1)->equals(String(":"))) {
 		hours = parse.substring(0, 2)->doubleValue();
 		minutes = parse.substring(3, 2)->doubleValue();
 	} else if (parse.length() == 4) {
@@ -148,11 +148,7 @@ Duration::operator double() const {
 	return this->seconds();
 }
 
-bool Duration::operator==(const Duration& other) const {
-	return _seconds == other._seconds;
-}
-
-bool Duration::operator>(const Duration& other) const {
+bool Duration::greaterThan(const Duration& other) const {
 	return _seconds > other._seconds;
 }
 

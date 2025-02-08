@@ -60,8 +60,10 @@ namespace foundation::types {
 
 		operator double() const;
 
-		bool operator==(const Duration& other) const;
-		virtual bool operator>(const Duration& other) const override;
+		bool operator==(const Duration& other) const = delete;
+		bool operator>(const Duration& other) const = delete;
+
+		bool greaterThan(const Duration& other) const;
 		Duration operator+(const Duration& other) const;
 		Duration operator-(const Duration& other) const;
 		Duration operator*(const double other) const;

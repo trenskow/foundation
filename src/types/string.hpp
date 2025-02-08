@@ -213,15 +213,27 @@ namespace foundation::types {
 
 		virtual Kind kind() const override;
 
-		virtual bool operator==(
+		bool operator==(
 			const Type& other
-		) const override;
+		) const = delete;
 
 		bool operator==(
 			const char* other
+		) const = delete;
+
+		bool operator>(
+			const String& other
+		) const = delete;
+
+		virtual bool equals(
+			const Type& other
+		) const override;
+
+		bool equals(
+			const char* other
 		) const;
 
-		virtual bool operator>(
+		virtual bool greaterThan(
 			const String& other
 		) const override;
 

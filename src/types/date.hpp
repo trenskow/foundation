@@ -152,8 +152,20 @@ namespace foundation::types {
 
 		virtual uint64_t hash() const override;
 
-		virtual bool operator==(
+		bool operator==(
 			const Type& other
+		) const = delete;
+
+		bool operator>(
+			const Date& other
+		) const = delete;
+
+		virtual bool equals(
+			const Type& other
+		) const override;
+
+		virtual bool greaterThan(
+			const Date& other
 		) const override;
 
 		Date operator+(
@@ -173,10 +185,6 @@ namespace foundation::types {
 
 		void operator-=(
 			const Duration& duration);
-
-		virtual bool operator>(
-			const Date& other
-		) const override;
 
 		Date& operator=(
 			const Date& other);

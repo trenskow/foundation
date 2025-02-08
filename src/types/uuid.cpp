@@ -86,17 +86,11 @@ uint64_t UUID::hash() const {
 		.add(this->_lower);
 }
 
-bool UUID::operator==(
+bool UUID::equals(
 	const Type& other
 ) const {
 	if (other.kind() != Kind::uuid) return false;
 	return this->_lower == ((const UUID&)other)._lower && this->_upper == ((const UUID&)other)._upper;
-}
-
-bool UUID::operator!=(
-	const UUID& other
-) const {
-	return !(*this == other);
 }
 
 UUID& UUID::operator=(

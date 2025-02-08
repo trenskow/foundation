@@ -236,7 +236,10 @@ namespace foundation::types {
 			return Kind::dictionary;
 		}
 
-		virtual bool operator==(const Type& other) const override {
+		bool operator==(const Type& other) const = delete;
+		bool operator!=(const Type& other) const = delete;
+
+		virtual bool equals(const Type& other) const override {
 
 			if (!other.is(Type::Kind::dictionary)) return false;
 
@@ -250,17 +253,12 @@ namespace foundation::types {
 
 			if constexpr (std::is_base_of<Hashable, Value>::value) {
 				return _keys.every([&](const Key& key) {
-					return this->get(key) == otherDictionary.get(key);
+					return this->get(key)->equals(*otherDictionary.get(key));
 				});
 			} else {
 				return true;
 			}
 
-		}
-
-		virtual bool operator!=(const Type& other) const override {
-			if (!other.is(Type::Kind::dictionary)) return true;
-			return this->operator!=((const Dictionary<Key, Value>&)other);
 		}
 
 		Dictionary<Key, Value>& operator=(const Dictionary<Key, Value>& other) {

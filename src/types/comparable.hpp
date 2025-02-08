@@ -18,18 +18,22 @@ namespace foundation::types {
 
 		public:
 
-			virtual bool operator>(const T& other) const = 0;
-
-			inline bool operator<(const T& other) const {
-				return !(other >= (T&)*this);
+			bool equals(const T& other) const {
+				return !this->greaterThan(other) && !other.greaterThan((T&)*this);
 			}
 
-			inline bool operator>=(const T& other) const {
-				return !other.operator<((T&)*this);
+			virtual bool greaterThan(const T& other) const = 0;
+
+			inline bool lessThan(const T& other) const {
+				return other.greaterThanOrEqual((T&)*this);
 			}
 
-			inline bool operator<=(const T& other) const {
-				return !this->operator>(other);
+			inline bool greaterThanOrEqual(const T& other) const {
+				return this->greaterThan(other) || this->equals(other);
+			}
+
+			inline bool lessThanOrEqual(const T& other) const {
+				return !this->greaterThan(other);
 			}
 
 			Comparison compareTo(const T& other) const {
