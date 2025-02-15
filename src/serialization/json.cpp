@@ -383,7 +383,7 @@ Strong<Type> JSON::parse(
 }
 
 bool JSON::isStringifyable(
-	Strong<Type> data
+	const Type& data
 ) {
 
 	Data<void*> references;
@@ -395,7 +395,7 @@ bool JSON::isStringifyable(
 }
 
 Strong<String> JSON::stringify(
-	Strong<Type> data
+	const Type& data
 ) {
 
 	Data<void*> references;
@@ -407,13 +407,9 @@ Strong<String> JSON::stringify(
 }
 
 bool JSON::_isStringifyable(
-	Strong<Type> data,
+	const Type& data,
 	Data<void*> references
 ) {
-
-	if (Null::is(data)) {
-		return true;
-	}
 
 	if (references.contains((void*)&data)) {
 		return false;
@@ -422,21 +418,20 @@ bool JSON::_isStringifyable(
 	Data<void*> referencesNested = references
 		.appending((void*)&data);
 
-	switch (data->kind()) {
+	switch (data.kind()) {
 		case Type::Kind::dictionary: {
 
-			Strong<Dictionary<Type, Type>> dictionary = data.as<Dictionary<Type, Type>>();
+			const Dictionary<Type, Type>& dictionary = data.as<Dictionary<Type, Type>>();
 
-			return dictionary->keys()->every([&](const Type& type) {
+			return dictionary.keys()->every([&](const Type& type) {
 				return type.is(Type::Kind::string);
 			}) && _isStringifyable(
-				dictionary->values()
-					.as<Type>(),
+				dictionary.values(),
 				referencesNested);
 
 		}
 		case Type::Kind::array: {
-			return data.as<Array<Type>>()->every([&](const Type& data) {
+			return data.as<Array<Type>>().every([&](const Type& data) {
 				return _isStringifyable(
 					data,
 					referencesNested);
@@ -455,13 +450,9 @@ bool JSON::_isStringifyable(
 }
 
 Strong<String> JSON::_stringify(
-	Strong<Type> data,
+	const Type& data,
 	Data<void*>& references
 ) {
-
-	if (Null::is(data)) {
-		return Strong<String>("null");
-	}
 
 	if (references.contains((void*)&data)) {
 		throw JSONEncodingCircularReferenceException();
@@ -472,19 +463,19 @@ Strong<String> JSON::_stringify(
 
 	Strong<String> result;
 
-	switch (data->kind()) {
+	switch (data.kind()) {
 		case Type::Kind::dictionary: {
 
 			result->append("{");
 
 			auto dictionary = data.as<Dictionary<Type, Type>>();
 
-			result->append(String::join(dictionary->keys()->map<String>([&](const Type& key) {
+			result->append(String::join(dictionary.keys()->map<String>([&](const Type& key) {
 				if (key.kind() != Type::Kind::string) throw EncoderTypeException();
 				Strong<String> result;
 				result->append(this->_stringify(key, referencesNested));
 				result->append(":");
-				result->append(this->_stringify(dictionary->get(key), referencesNested));
+				result->append(this->_stringify(dictionary.get(key), referencesNested));
 				return result;
 			}), ","));
 
@@ -507,7 +498,7 @@ Strong<String> JSON::_stringify(
 			break;
 		}
 		case Type::Kind::string: {
-			auto bytes = data.as<String>()->UTF16Data(Endian::systemVariant());
+			auto bytes = data.as<String>().UTF16Data(Endian::systemVariant());
 			result->append("\"");
 			for (size_t idx = 0 ; idx < bytes->length() ; idx++) {
 				auto byte = bytes->itemAtIndex(idx);
@@ -549,15 +540,15 @@ Strong<String> JSON::_stringify(
 			break;
 		}
 		case Type::Kind::number: {
-			switch (data.as<Numeric>()->subType()) {
+			switch (data.as<Numeric>().subType()) {
 				case Numeric::Subtype::boolean:
-					result->append(data.as<types::Boolean>()->value() ? "true" : "false");
+					result->append(data.as<types::Boolean>().value() ? "true" : "false");
 					break;
 				case Numeric::Subtype::integer:
-					result->append(String::format("%lld", data.as<Integer>()->value()));
+					result->append(String::format("%lld", data.as<Integer>().value()));
 					break;
 				case Numeric::Subtype::floatingPoint: {
-					double value = data.as<Float>()->value();
+					double value = data.as<Float>().value();
 					uint64_t length = snprintf(nullptr, 0, "%f", value);
 					char str[length + 1];
 					snprintf(str, length + 1, "%f", value);
@@ -573,14 +564,14 @@ Strong<String> JSON::_stringify(
 		case Type::Kind::date:
 			return this->_stringify(
 				data.as<Date>()
-					->to(Date::TimeZone::utc)
+					.to(Date::TimeZone::utc)
 					.toISO8601(),
 				referencesNested);
 			break;
 		case Type::Kind::uuid:
 			return this->_stringify(
 				data.as<UUID>()
-					->string(),
+					.string(),
 					referencesNested);
 		default:
 			throw EncoderTypeException();
