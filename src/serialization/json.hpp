@@ -95,19 +95,19 @@ namespace foundation::serialization {
 			const String& string);
 
 		static bool isStringifyable(
-			const Type& data);
+			Strong<Type> data);
 
 		Strong<String> stringify(
-			const Type& data);
+			Strong<Type> data);
 
 	private:
 
 		static bool _isStringifyable(
-			const Type& data,
+			Strong<Type> data,
 			Data<void*> references);
 
 		Strong<String> _stringify(
-			const Type& data,
+			Strong<Type> data,
 			Data<void*>& references);
 
 	};
