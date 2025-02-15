@@ -549,9 +549,9 @@ Strong<String> JSON::_stringify(
 					break;
 				case Numeric::Subtype::floatingPoint: {
 					double value = data.as<Float>().value();
-					uint64_t length = snprintf(nullptr, 0, "%f", value);
+					uint64_t length = snprintf(nullptr, 0, "%g", value);
 					char str[length + 1];
-					snprintf(str, length + 1, "%f", value);
+					snprintf(str, length + 1, "%g", value);
 					result->append(str);
 					break;
 				}
