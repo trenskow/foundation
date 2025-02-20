@@ -69,18 +69,18 @@ namespace foundation::types {
 					Data<T> boundaries = range.split("...")
 						->mapToData<T>([&](const String& boundary, size_t idx) {
 
-							double value = (double)numeric_limits<T>::min();
+							T value = numeric_limits<T>::min();
 
 							if (boundary.equals("")) {
-								if (idx == 1) value = (double)numeric_limits<T>::max();
+								if (idx == 1) value = numeric_limits<T>::max();
 							} else {
-								value = (double)((T)boundary.doubleValue());
+								value = (T)boundary.doubleValue();
 							}
 
-							return (T)math::max<double>(
-								(double)numeric_limits<T>::min(),
-								(T)math::min<double>(
-									(double)numeric_limits<T>::max(),
+							return (T)math::max<T>(
+								numeric_limits<T>::min(),
+								math::min<T>(
+									numeric_limits<T>::max(),
 									value));
 
 						});
