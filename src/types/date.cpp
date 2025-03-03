@@ -329,6 +329,11 @@ Type::Kind Date::kind() const{
 	return Kind::date;
 }
 
+Strong<Type> Date::clone() const{
+	return Strong<Date>(*this)
+		.as<Type>();
+}
+
 uint64_t Date::hash() const {
 	double seconds = this->_time.seconds();
 	uint64_t hash;

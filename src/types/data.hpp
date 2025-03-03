@@ -627,6 +627,11 @@ namespace foundation::types {
 			return Kind::data;
 		}
 
+		virtual Strong<Type> clone() const override {
+			return Strong<Data<T>>(*this)
+				.template as<Type>();
+		}
+
 		bool equals(const Data<T>& other) const {
 			if (this->length() != other.length()) return false;
 			for (size_t idx = 0 ; idx < this->length() ; idx++) {

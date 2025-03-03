@@ -17,6 +17,8 @@ namespace foundation::types {
 
 	class URL : public Type {
 
+	friend class Strong<URL>;
+
 	public:
 
 		static String escapeDecode(
@@ -48,6 +50,8 @@ namespace foundation::types {
 			Strong<String> fragment);
 
 		virtual Kind kind() const override;
+
+		virtual Strong<Type> clone() const override;
 
 		const String& scheme() const;
 

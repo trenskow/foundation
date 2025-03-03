@@ -18,6 +18,10 @@ Type::Kind Type::kind() const {
 	throw NotImplementedException();
 }
 
+Strong<Type> Type::clone() const {
+	throw NotImplementedException();
+}
+
 Type& Type::operator=(
 	const Type& other
 ) {

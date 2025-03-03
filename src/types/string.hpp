@@ -213,6 +213,8 @@ namespace foundation::types {
 
 		virtual Kind kind() const override;
 
+		virtual Strong<Type> clone() const override;
+
 		bool operator==(
 			const Type& other
 		) const = delete;

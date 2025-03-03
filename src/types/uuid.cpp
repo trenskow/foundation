@@ -80,6 +80,11 @@ Type::Kind UUID::kind() const {
 	return Type::Kind::uuid;
 }
 
+Strong<Type> UUID::clone() const {
+	return Strong<UUID>(*this)
+		.as<Type>();
+}
+
 uint64_t UUID::hash() const {
 	return Hashable::Builder()
 		.add(this->_upper)

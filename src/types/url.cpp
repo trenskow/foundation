@@ -193,12 +193,12 @@ URL::URL(
 	const URL& other
 ) : Type(),
 	_scheme(other._scheme),
-	_userInfo(*other._userInfo),
-	_host(*other._host),
+	_userInfo(other._userInfo.equals(nullptr) ? nullptr : other._userInfo->clone().as<String>()),
+	_host(other._host.equals(nullptr) ? nullptr : other._host->clone().as<String>()),
 	_port(other._port),
 	_path(other._path),
 	_query(other._query),
-	_fragment(*other._fragment) { }
+	_fragment(other._fragment.equals(nullptr) ? nullptr : other._fragment->clone().as<String>()) { }
 
 URL::URL(
 	const String& scheme,
@@ -225,6 +225,11 @@ URL::URL(
 
 Type::Kind URL::kind() const {
 	return Kind::url;
+}
+
+Strong<Type> URL::clone() const {
+	return Strong<URL>(*this)
+		.as<Type>();
 }
 
 const String& URL::scheme() const {

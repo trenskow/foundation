@@ -30,6 +30,11 @@ Type::Kind Null::kind() const {
 	return Kind::null;
 }
 
+Strong<Type> Null::clone() const {
+	return Strong<Null>()
+		.as<Type>();
+}
+
 bool Null::equals(
 	const Type& other
 ) const {

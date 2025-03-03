@@ -33,6 +33,8 @@ namespace foundation::types {
 
 		virtual Kind kind() const override;
 
+		virtual Strong<Type> clone() const override;
+
 		virtual uint64_t hash() const override;
 
 		bool operator==(

@@ -582,6 +582,16 @@ namespace foundation::types {
 			return Kind::array;
 		}
 
+		virtual Strong<Type> clone() const override {
+			return this->map<T>([](Strong<T> item) {
+				if constexpr (std::is_base_of<Cloneable, T>::value) {
+					return item->clone()
+						.template as<T>();
+				}
+				else return item;
+			}).template as<Type>();
+		}
+
 		bool operator==(const Type& other) const = delete;
 		bool operator!=(const Array<T>& other) const  = delete;
 

@@ -58,6 +58,11 @@ namespace foundation::types {
 			return Type::Kind::number;
 		}
 
+		virtual Strong<Type> clone() const override {
+			return Strong<Number<T>>(*this)
+				.template as<Type>();
+		}
+
 		static bool within(
 			T value,
 			const String& range

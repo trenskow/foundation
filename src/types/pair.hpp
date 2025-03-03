@@ -64,6 +64,30 @@ namespace foundation::types {
 			return Kind::pair;
 		}
 
+		virtual Strong<Type> clone() const override {
+
+			Strong<First> first = nullptr;
+			Strong<Second> second = nullptr;
+
+			if constexpr (std::is_base_of<Cloneable, First>::value) {
+				first = _first->clone()
+					.template as<First>();
+			} else {
+				first = _first;
+			}
+
+			if constexpr (std::is_base_of<Cloneable, Second>::value) {
+				second = _second->clone()
+					.template as<Second>();
+			} else {
+				second = _second;
+			}
+
+			return Strong<Pair<First, Second>>(first, second)
+				.template as<Type>();
+
+		}
+
 		Pair<First, Second>& operator=(const Pair<First, Second>& other) {
 			Type::operator=(other);
 			_first = other._first;

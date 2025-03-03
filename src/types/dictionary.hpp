@@ -236,6 +236,18 @@ namespace foundation::types {
 			return Kind::dictionary;
 		}
 
+		virtual Strong<Type> clone() const override {
+
+			Strong<Dictionary<Key, Value>> result;
+
+			result->_keys = _keys.clone().template as<Array<Key>>();
+			result->_values = _values.clone().template as<Array<Value>>();
+
+			return result
+				.template as<Type>();
+
+		}
+
 		bool operator==(const Type& other) const = delete;
 		bool operator!=(const Type& other) const = delete;
 

@@ -441,6 +441,11 @@ Type::Kind String::kind() const {
 	return Kind::string;
 }
 
+Strong<Type> String::clone() const {
+	return Strong<String>(*this)
+		.as<Type>();
+}
+
 bool String::equals(
 	const Type& other
 ) const {

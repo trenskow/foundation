@@ -13,6 +13,7 @@
 
 #include "../memory/object.hpp"
 #include "./hashable.hpp"
+#include "./cloneable.hpp"
 #include "../exceptions/exception.hpp"
 #include "../tools/math.hpp"
 
@@ -24,7 +25,7 @@ namespace foundation::types {
 
 	static const size_t NotFound = math::limit<size_t>();
 
-	class Type : public Object, public Hashable {
+	class Type : public Object, public Hashable, public Cloneable<Type> {
 
 	public:
 
@@ -52,6 +53,8 @@ namespace foundation::types {
 		) = delete;
 
 		virtual Kind kind() const;
+
+		virtual Strong<Type> clone() const override;
 
 		Type& operator=(
 			const Type& other
