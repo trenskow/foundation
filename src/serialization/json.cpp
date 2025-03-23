@@ -83,7 +83,9 @@ Strong<Type> JSON::_parseDictionary(
 	size_t level
 ) {
 
-	if (string[*idx] != '{') throw JSONMalformedException(*line, *character);
+	if (string[*idx] != '{') {
+		throw JSONMalformedException(*line, *character);
+	}
 
 	(*idx)++;
 	(*character)++;
@@ -96,21 +98,27 @@ Strong<Type> JSON::_parseDictionary(
 		this->_offsetWhiteSpaces(string, idx, line, character);
 		if (string[*idx] == '}') break;
 		if (string[*idx] == ',') {
-			if (result->count() == 0) throw JSONMalformedException(*line, *character);
+			if (result->count() == 0) {
+				throw JSONMalformedException(*line, *character);
+			}
 			(*idx)++;
 			(*character)++;
 			this->_offsetWhiteSpaces(string, idx, line, character);
 		}
 		Strong<String> key = this->_parseString(string, idx, line, character).as<String>();
 		this->_offsetWhiteSpaces(string, idx, line, character);
-		if (string[*idx] != ':') throw JSONMalformedException(*line, *character);
+		if (string[*idx] != ':') {
+			throw JSONMalformedException(*line, *character);
+		}
 		(*idx)++;
 		(*character)++;
 		this->_offsetWhiteSpaces(string, idx, line, character);
 		Strong<Type> value = this->_parse(string, idx, line, character, level + 1);
 		result->set(key, value);
 		this->_offsetWhiteSpaces(string, idx, line, character);
-		if (string[*idx] != ',' && string[*idx] != '}') throw JSONMalformedException(*line, *character);
+		if (string[*idx] != ',' && string[*idx] != '}') {
+			throw JSONMalformedException(*line, *character);
+		}
 	}
 
 	(*idx)++;
@@ -128,7 +136,9 @@ Strong<Type> JSON::_parseArray(
 	size_t level
 ) {
 
-	if (string[*idx] != '[') throw JSONMalformedException(*line, *character);
+	if (string[*idx] != '[') {
+		throw JSONMalformedException(*line, *character);
+	}
 
 	(*idx)++;
 	(*character)++;
@@ -141,14 +151,20 @@ Strong<Type> JSON::_parseArray(
 		this->_offsetWhiteSpaces(string, idx, line, character);
 		if (string[*idx] == ']') break;
 		if (string[*idx] == ',') {
-			if (result->count() == 0) throw JSONMalformedException(*line, *character);
+			if (result->count() == 0) {
+				throw JSONMalformedException(*line, *character);
+			}
 			(*idx)++;
 			(*character)++;
 			this->_offsetWhiteSpaces(string, idx, line, character);
-		} else if (result->count() > 0) throw JSONMalformedException(*line, *character);
+		} else if (result->count() > 0) {
+			throw JSONMalformedException(*line, *character);
+		}
 		result->append(_parse(string, idx, line, character, level + 1));
 		this->_offsetWhiteSpaces(string, idx, line, character);
-		if (string[*idx] != ',' && string[*idx] != ']') throw JSONMalformedException(*line, *character);
+		if (string[*idx] != ',' && string[*idx] != ']') {
+			throw JSONMalformedException(*line, *character);
+		}
 	}
 
 	(*idx)++;
@@ -193,7 +209,9 @@ Strong<Type> JSON::_parseString(
 	size_t* character
 ) {
 
-	if (string[*idx] != '"') throw JSONMalformedException(*line, *character);
+	if (string[*idx] != '"') {
+		throw JSONMalformedException(*line, *character);
+	}
 
 	(*idx)++;
 	(*character)++;
@@ -202,7 +220,9 @@ Strong<Type> JSON::_parseString(
 
 	do {
 
-		if (string.length() == *idx) throw JSONMalformedException(*line, *character);
+		if (string.length() == *idx) {
+			throw JSONMalformedException(*line, *character);
+		}
 		if (string[*idx] == '"') break;
 
 		switch (string[*idx]) {
@@ -260,7 +280,9 @@ Strong<Type> JSON::_parseString(
 				}
 				break;
 			default:
-				if (string[*idx] <= 0x0f) throw JSONMalformedException(*line, *character);
+				if (string[*idx] <= 0x0f) {
+					throw JSONMalformedException(*line, *character);
+				}
 				stringBytes.append(string[*idx]);
 		}
 
@@ -327,7 +349,9 @@ Strong<Type> JSON::_parse(
 ) {
 
 	// Maliciously deeply nested JSON could trigger stack overflow.
-	if (level > 64) throw JSONMalformedException(*line, *character);
+	if (level > 64) {
+		throw JSONMalformedException(*line, *character);
+	}
 
 	this->_offsetWhiteSpaces(string, idx, line, character);
 
@@ -376,7 +400,9 @@ Strong<Type> JSON::parse(
 
 	this->_offsetWhiteSpaces(string, &idx, &line, &character, false);
 
-	if (string.length() > idx) throw DecoderException(idx);
+	if (string.length() > idx) {
+		throw DecoderException(idx);
+	}
 
 	return result;
 
@@ -471,7 +497,9 @@ Strong<String> JSON::_stringify(
 			auto dictionary = data.as<Dictionary<Type, Type>>();
 
 			result->append(String::join(dictionary.keys()->map<String>([&](const Type& key) {
-				if (key.kind() != Type::Kind::string) throw EncoderTypeException();
+				if (key.kind() != Type::Kind::string) {
+					throw EncoderTypeException();
+				}
 				Strong<String> result;
 				result->append(this->_stringify(key, referencesNested));
 				result->append(":");
