@@ -35,16 +35,18 @@ String::String(
 }
 
 String::String(
-	const Data<uint8_t>& data
+	const Data<uint8_t>& data,
+	bool nullTerminated
 ) : String() {
-	_storage.append(_decodeUTF8(data.items(), _lengthWithoutNullTerminator<uint8_t>(data)));
+	_storage.append(_decodeUTF8(data.items(), nullTerminated ? _lengthWithoutNullTerminator<uint8_t>(data) : data.length()));
 }
 
 String::String(
 	const Data<uint16_t>& data,
-	const Endian::Variant& endian
+	const Endian::Variant& endian,
+	bool nullTerminated
 ) noexcept(false)  : String() {
-	_storage.append(_decodeUTF16(data.items(), _lengthWithoutNullTerminator<uint16_t>(data), endian));
+	_storage.append(_decodeUTF16(data.items(), nullTerminated ? _lengthWithoutNullTerminator<uint16_t>(data) : data.length(), endian));
 }
 
 String::String(

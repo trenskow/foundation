@@ -26,6 +26,46 @@ NotImplementedException* NotImplementedException::clone() const {
 	return new NotImplementedException();
 }
 
+const char* io::fs::FileNotFoundException::description() const {
+	return "File does not exist.";
+}
+
+io::fs::FileNotFoundException* io::fs::FileNotFoundException::clone() const {
+	return new FileNotFoundException();
+}
+
+const char* io::fs::CannotOpenFileException::description() const {
+	return "Could not open file.";
+}
+
+io::fs::CannotOpenFileException* io::fs::CannotOpenFileException::clone() const {
+	return new CannotOpenFileException();
+}
+
+io::fs::PositionIsOutsideFileRange::PositionIsOutsideFileRange(
+	ssize_t position
+) : _position(position) { }
+
+ssize_t io::fs::PositionIsOutsideFileRange::position() const {
+	return this->_position;
+}
+
+const char* io::fs::PositionIsOutsideFileRange::description() const {
+	return "Position is outside file range.";
+}
+
+io::fs::PositionIsOutsideFileRange* io::fs::PositionIsOutsideFileRange::clone() const {
+	return new PositionIsOutsideFileRange(this->_position);
+}
+
+const char* io::fs::FileModeException::description() const {
+	return "Operation not allowed in file's mode.";
+}
+
+io::fs::FileModeException* io::fs::FileModeException::clone() const {
+	return new FileModeException();
+}
+
 serialization::JSONMalformedException::JSONMalformedException(
 	size_t line,
 	size_t character

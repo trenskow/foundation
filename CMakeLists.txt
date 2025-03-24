@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.22)
 
-project(foundation DESCRIPTION "Shared C++ library for 0-bit Games.")
+project(foundation DESCRIPTION "Foundation is my own \"standard library\" for C++.")
 
 if(NOT CMAKE_BUILD_TYPE)
 	set(CMAKE_BUILD_TYPE Release)
@@ -31,6 +31,13 @@ add_library(foundation ${LIBRARY_BUILD_TYPE}
 	src/types/unicode.cpp
 	src/types/url.cpp
 	src/types/uuid.cpp)
+
+if (FOUNDATION_IO_FS)
+	message(STATUS "Foundation: namespace `io::fs` enabled")
+	add_compile_definitions(FOUNDATION_IO_FS)
+	target_sources(foundation PRIVATE
+		src/io/fs/file.cpp)
+endif()
 
 set(ARCH_OUTPUT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/build/${CMAKE_BUILD_TYPE}/${CMAKE_SYSTEM_PROCESSOR}")
 

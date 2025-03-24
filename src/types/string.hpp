@@ -64,12 +64,14 @@ namespace foundation::types {
 		) noexcept(false);
 
 		String(
-			const Data<uint8_t>& data
+			const Data<uint8_t>& data,
+			bool nullTerminated = true
 		) noexcept(false);
 
 		String(
 			const Data<uint16_t>& data,
-			const Endian::Variant& endian
+			const Endian::Variant& endian,
+			bool nullTerminated = true
 		) noexcept(false);
 
 		String(

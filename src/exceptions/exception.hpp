@@ -36,6 +36,70 @@ namespace foundation::exceptions {
 
 	};
 
+	namespace io {
+
+		namespace fs {
+
+			class FileNotFoundException: public Exception {
+
+				public:
+
+					virtual ~FileNotFoundException() = default;
+
+					virtual const char* description() const override;
+
+					virtual FileNotFoundException* clone() const override;
+
+			};
+
+			class CannotOpenFileException: public Exception {
+
+				public:
+
+					virtual ~CannotOpenFileException() = default;
+
+					virtual const char* description() const override;
+
+					virtual CannotOpenFileException* clone() const override;
+
+			};
+
+			class PositionIsOutsideFileRange: public Exception {
+
+				private:
+
+					ssize_t _position;
+
+				public:
+
+					PositionIsOutsideFileRange(ssize_t position);
+
+					virtual ~PositionIsOutsideFileRange() = default;
+
+					ssize_t position() const;
+
+					virtual const char* description() const override;
+
+					virtual PositionIsOutsideFileRange* clone() const override;
+
+			};
+
+			class FileModeException: public Exception {
+
+				public:
+
+					virtual ~FileModeException() = default;
+
+					virtual const char* description() const override;
+
+					virtual FileModeException* clone() const override;
+
+			};
+
+		}
+
+	}
+
 	namespace serialization {
 
 		class JSONMalformedException : public Exception {

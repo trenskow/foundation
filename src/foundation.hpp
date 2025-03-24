@@ -10,6 +10,7 @@
 #define foundation_hpp
 
 #include "./exceptions/exceptions.hpp"
+#include "./io/io.hpp"
 #include "./types/types.hpp"
 #include "./memory/memory.hpp"
 #include "./serialization/serialization.hpp"
