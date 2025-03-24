@@ -10,10 +10,8 @@
 #define file_hpp
 
 #include <stdio.h>
-#include <wordexp.h>
-#include <string.h>
 #include <unistd.h>
-#include <dirent.h>
+#include <sys/types.h>
 
 #include "../../memory/object.hpp"
 #include "../../exceptions/exception.hpp"
@@ -47,7 +45,6 @@ namespace foundation::io::fs {
 
 		static Strong<File> open(const String& filename, Mode mode);
 		static bool exists(const String& filename);
-		static String expand(const String& filename);
 		static String resolve(const String& filename);
 		static Array<String> directoryContent(const String& filename);
 

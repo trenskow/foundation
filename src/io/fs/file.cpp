@@ -6,6 +6,9 @@
 // See license in LICENSE.
 //
 
+#include <string.h>
+#include <dirent.h>
+
 #include "file.hpp"
 
 using namespace foundation::io::fs;
@@ -18,20 +21,6 @@ Strong<File> File::open(const String& filename, Mode mode) {
 bool File::exists(const String& filename) {
 	return filename.mapCString<bool>([](const char* filename){
 		return access(filename, F_OK) == 0;
-	});
-}
-
-String File::expand(const String& filename) {
-	return filename.mapCString<String>([](const char* filename) {
-		wordexp_t exp_result;
-		wordexp(filename, &exp_result, 0);
-		size_t filenameLength = strlen(exp_result.we_wordv[0]);
-		auto ret = String::fromCString([&exp_result,&filenameLength](char* buffer, size_t) {
-			memcpy(buffer, exp_result.we_wordv[0], filenameLength);
-			return filenameLength;
-		}, filenameLength);
-		wordfree(&exp_result);
-		return ret;
 	});
 }
 
@@ -75,7 +64,7 @@ File::~File() {
 }
 
 File::File(const String& filename, Mode mode) {
-	File::resolve(File::expand(filename)).withCString([this,&mode](const char* filename) {
+	filename.withCString([this,&mode](const char* filename) {
 
 		switch (mode) {
 			case Mode::asRead:
