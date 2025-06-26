@@ -9,6 +9,8 @@
 #ifndef foundation_allocator_hpp
 #define foundation_allocator_hpp
 
+#include <stdint.h>
+
 namespace foundation::memory {
 
 	class Allocator {
