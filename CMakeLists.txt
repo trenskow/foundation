@@ -6,7 +6,7 @@ if(NOT CMAKE_BUILD_TYPE)
 	set(CMAKE_BUILD_TYPE Release)
 endif()
 
-set(CMAKE_CXX_FLAGS "-Wall -Wextra -Werror -Wno-vla-extension -std=c++20")
+set(CMAKE_CXX_FLAGS "-Wall -Wextra -Werror -Wno-vla-extension -std=c++20 -pthread")
 set(CMAKE_CXX_FLAGS_DEBUG "-g")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 
@@ -37,6 +37,15 @@ if (FOUNDATION_IO_FS)
 	add_compile_definitions(FOUNDATION_IO_FS)
 	target_sources(foundation PRIVATE
 		src/io/fs/file.cpp)
+endif()
+
+if (FOUNDATION_PARALLELISM)
+	message(STATUS "Foundation: namespace `parallelism` enabled")
+	add_compile_definitions(FOUNDATION_PARALLELISM)
+	target_sources(foundation PRIVATE
+		src/parallelism/mutex.cpp
+		src/parallelism/run-loop.cpp
+		src/parallelism/thread.cpp)
 endif()
 
 set(ARCH_OUTPUT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/build/${CMAKE_BUILD_TYPE}/${CMAKE_SYSTEM_PROCESSOR}")

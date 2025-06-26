@@ -13,6 +13,7 @@
 #include "./io/io.hpp"
 #include "./types/types.hpp"
 #include "./memory/memory.hpp"
+#include "./parallelism/parallelism.hpp"
 #include "./serialization/serialization.hpp"
 #include "./system/system.hpp"
 #include "./tools/tools.hpp"
