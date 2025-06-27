@@ -384,6 +384,20 @@ namespace foundation::exceptions {
 
 	namespace tools {
 
+		class EmptyException : public Exception {
+
+			public:
+
+				EmptyException();
+
+				virtual ~EmptyException() = default;
+
+				virtual const char* description() const override;
+
+				virtual EmptyException* clone() const override;
+
+		};
+
 		class InvalidPatternException : public Exception {
 
 			public:

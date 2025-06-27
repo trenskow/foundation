@@ -20,30 +20,33 @@ namespace foundation::parallelism {
 		public:
 
 			Mutex();
+			Mutex(const Mutex&) = delete;
+			Mutex(Mutex&&) = delete;
+
 			~Mutex();
 
-			void lock();
-			void unlock();
+			void lock() const;
+			void unlock() const;
 
-			void locked(std::function<void()> function);
+			void locked(
+				std::function<void()> function
+			) const;
 
 			template<typename T>
-			T locked(std::function<T()> function) {
-
-				T result;
+			T locked(
+				std::function<T()> function
+			) const {
 
 				this->lock();
 
 				try {
-					result = function();
+					T result = function();
+					this->unlock();
+					return result;
 				} catch (...) {
 					this->unlock();
 					throw;
 				}
-
-				this->unlock();
-
-				return result;
 
 			}
 
@@ -54,8 +57,8 @@ namespace foundation::parallelism {
 		private:
 
 			pthread_mutexattr_t _mutexAttributes;
-			pthread_mutex_t _mutex;
-			pthread_cond_t _condition;
+			mutable pthread_mutex_t _mutex;
+			mutable pthread_cond_t _condition;
 
 	};
 

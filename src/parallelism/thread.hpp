@@ -21,6 +21,9 @@ namespace foundation::parallelism {
 		public:
 
 			Thread(std::function<void()> function);
+			Thread(const Thread&) = delete;
+			Thread(Thread&&) = delete;
+
 			virtual ~Thread();
 
 		private:

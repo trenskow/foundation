@@ -11,24 +11,33 @@
 
 #include <functional>
 #include <queue>
+#include <thread>
 
 #include "../memory/strong.hpp"
+#include "../memory/object.hpp"
+#include "../tools/queue.hpp"
 
 #include "./mutex.hpp"
 #include "./thread.hpp"
 
 using namespace foundation::memory;
+using namespace foundation::tools;
 
 namespace foundation::parallelism {
 
-	class RunLoop {
+	class RunLoop : public Object {
 
 		public:
 
 			RunLoop();
+			RunLoop(const RunLoop&) = delete;
+			RunLoop(RunLoop&&) = delete;
+
 			~RunLoop();
 
-			void run();
+			size_t taskCount() const;
+
+			void start();
 			void stop();
 
 			void post(std::function<void()> function);
@@ -38,7 +47,7 @@ namespace foundation::parallelism {
 			Mutex _mutex;
 
 			Strong<Thread> _thread;
-			std::queue<std::function<void()>> _tasks;
+			Queue<std::function<void()>> _tasks;
 
 			bool _shouldStop = false;
 

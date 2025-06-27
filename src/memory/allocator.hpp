@@ -18,6 +18,7 @@ namespace foundation::memory {
 	public:
 
 		void *operator new(size_t size) noexcept(false);
+		void *operator new(size_t size, void *ptr) noexcept(false);
 		void operator delete(void *ptr) throw();
 
 	protected:

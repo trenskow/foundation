@@ -23,15 +23,17 @@ Mutex::~Mutex() {
 	pthread_mutexattr_destroy(&_mutexAttributes);
 }
 
-void Mutex::lock() {
+void Mutex::lock() const {
 	pthread_mutex_lock(&_mutex);
 }
 
-void Mutex::unlock() {
+void Mutex::unlock() const {
 	pthread_mutex_unlock(&_mutex);
 }
 
-void Mutex::locked(std::function<void()> function) {
+void Mutex::locked(
+	std::function<void()> function
+) const {
 	(void)this->locked<void*>([&]() {
 		function();
 		return nullptr;

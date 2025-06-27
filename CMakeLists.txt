@@ -18,6 +18,9 @@ add_library(foundation ${LIBRARY_BUILD_TYPE}
 	src/exceptions/exception.cpp
 	src/memory/allocator.cpp
 	src/memory/object.cpp
+	src/parallelism/mutex.cpp
+	src/parallelism/run-loop.cpp
+	src/parallelism/thread.cpp
 	src/serialization/json.cpp
 	src/system/endian.cpp
 	src/system/environment.cpp
@@ -32,20 +35,11 @@ add_library(foundation ${LIBRARY_BUILD_TYPE}
 	src/types/url.cpp
 	src/types/uuid.cpp)
 
-if (FOUNDATION_IO_FS)
+if(FOUNDATION_IO_FS)
 	message(STATUS "Foundation: namespace `io::fs` enabled")
 	add_compile_definitions(FOUNDATION_IO_FS)
 	target_sources(foundation PRIVATE
 		src/io/fs/file.cpp)
-endif()
-
-if (FOUNDATION_PARALLELISM)
-	message(STATUS "Foundation: namespace `parallelism` enabled")
-	add_compile_definitions(FOUNDATION_PARALLELISM)
-	target_sources(foundation PRIVATE
-		src/parallelism/mutex.cpp
-		src/parallelism/run-loop.cpp
-		src/parallelism/thread.cpp)
 endif()
 
 set(ARCH_OUTPUT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/build/${CMAKE_BUILD_TYPE}/${CMAKE_SYSTEM_PROCESSOR}")

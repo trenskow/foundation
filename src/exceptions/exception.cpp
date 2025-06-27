@@ -282,6 +282,16 @@ uint8_t types::UrlDecodingException::character() const {
 	return this->_character;
 }
 
+tools::EmptyException::EmptyException() { }
+
+const char* tools::EmptyException::description() const {
+	return "Is empty.";
+}
+
+tools::EmptyException* tools::EmptyException::clone() const {
+	return new EmptyException();
+}
+
 tools::InvalidPatternException::InvalidPatternException() { }
 
 const char* tools::InvalidPatternException::description() const {

@@ -11,7 +11,8 @@
 using namespace foundation::parallelism;
 
 RunLoop::RunLoop()
-	: _mutex(),
+	: Object(),
+	  _mutex(),
 	  _thread(nullptr),
 	  _tasks(),
 	  _shouldStop(false) { }
@@ -20,7 +21,13 @@ RunLoop::~RunLoop() {
 	this->stop();
 }
 
-void RunLoop::run() {
+size_t RunLoop::taskCount() const {
+	return this->_mutex.locked<size_t>([&]() {
+		return this->_tasks.length();
+	});
+}
+
+void RunLoop::start() {
 
 	this->_mutex.locked([&]() {
 
@@ -36,9 +43,9 @@ void RunLoop::run() {
 
 			while (!this->_shouldStop) {
 
-				while (!this->_tasks.empty()) {
+				while (!this->_tasks.isEmpty()) {
 
-					auto task = this->_tasks.front();
+					auto task = this->_tasks.head();
 
 					this->_tasks.pop();
 

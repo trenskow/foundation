@@ -26,6 +26,14 @@ void* Allocator::operator new(
 	return allocate(size);
 }
 
+void* Allocator::operator new(
+	size_t size,
+	void *ptr
+) noexcept(false) {
+	if (!ptr) throw AllocationException(size);
+	return ptr;
+}
+
 void Allocator::operator delete(
 	void *ptr
 ) throw() {
