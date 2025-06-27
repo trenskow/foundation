@@ -41,9 +41,9 @@ void RunLoop::start() {
 
 			this->_mutex.lock();
 
-			while (!this->_shouldStop) {
+			while (!this->_tasks.isEmpty() || !this->_shouldStop) {
 
-				while (!this->_tasks.isEmpty()) {
+				if (!this->_tasks.isEmpty()) {
 
 					auto task = this->_tasks.head();
 
@@ -55,11 +55,9 @@ void RunLoop::start() {
 
 				}
 
-				if (this->_shouldStop) {
-					break;
+				if (!this->_shouldStop) {
+					this->_mutex.wait();
 				}
-
-				this->_mutex.wait();
 
 			}
 
@@ -80,11 +78,12 @@ void RunLoop::stop() {
 		}
 
 		this->_shouldStop = true;
+
 		this->_mutex.notify();
 
-		this->_thread = nullptr;
-
 	});
+
+	this->_thread = nullptr;
 
 }
 

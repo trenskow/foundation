@@ -25,8 +25,7 @@ namespace foundation::memory {
 	class Weak;
 
 	template<typename T = Object>
-	class Strong : public Allocator
-	{
+	class Strong : public Allocator {
 
 		static_assert(is_base_of<Object, T>::value);
 
@@ -167,6 +166,10 @@ namespace foundation::memory {
 		Strong<T> with(function<void(T&)> todo) {
 			if (this->_object != nullptr) todo(*this->_object);
 			return *this;
+		}
+
+		Strong<T> retained() const {
+			return Strong<T>(this->_object);
 		}
 
 	};

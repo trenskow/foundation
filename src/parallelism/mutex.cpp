@@ -41,9 +41,7 @@ void Mutex::locked(
 }
 
 void Mutex::wait() {
-	this->locked([&]() {
-		pthread_cond_wait(&_condition, &_mutex);
-	});
+	pthread_cond_wait(&_condition, &_mutex);
 }
 
 void Mutex::notify() {

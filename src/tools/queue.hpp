@@ -58,7 +58,7 @@ namespace foundation::tools {
 
 			void push(const T& item) {
 				
-				if (this->_length + 1 < this->_capacity) {
+				if (this->_length + 1 > this->_capacity) {
 
 					size_t newCapacity = Allocator::calculateBufferLength(this->_capacity + 1);
 					T* newData = (T*)calloc(this->_capacity + 1, sizeof(T));
