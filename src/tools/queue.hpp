@@ -64,7 +64,7 @@ namespace foundation::tools {
 					T* newData = (T*)calloc(this->_capacity + 1, sizeof(T));
 
 					for (size_t idx = 0 ; idx < this->_length ; idx++) {
-						memcpy(&newData[idx], &this->_data[(this->_head + idx) % this->_capacity], sizeof(T));
+						newData[idx] = std::move(this->_data[(this->_head + idx) % this->_capacity]);
 					}
 
 					free(this->_data);
