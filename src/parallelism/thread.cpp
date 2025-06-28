@@ -6,6 +6,10 @@
 // See license in LICENSE.
 //
 
+#if defined(__APPLE__)
+#include <TargetConditionals.h>
+#endif
+
 #include "./thread.hpp"
 
 using namespace foundation::parallelism;
@@ -17,7 +21,11 @@ Thread::Thread(
 ) : foundation::memory::Object(),
     _function([=]() {
     	name.withCString([&](const char* cString) {
+#if defined(__APPLE__)
     		pthread_setname_np(cString);
+#elif defined(__linux__)
+    		pthread_setname_np(pthread_self(), cString);
+#endif
     	});
     	function();
     }) {
