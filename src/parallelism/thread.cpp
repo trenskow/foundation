@@ -24,4 +24,5 @@ Thread::Thread(std::function<void()> function)
 
 Thread::~Thread() {
 	pthread_join(this->_thread, nullptr);
+	this->_function = nullptr;
 }

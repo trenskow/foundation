@@ -39,21 +39,21 @@ namespace foundation::tools {
 				Queue<T>&& other
 			) = delete;
 
-			~Queue() {
+			virtual ~Queue() {
 				if (this->_data != nullptr) {
 					for (size_t idx = 0 ; idx < this->_length ; idx++) {
 						this->_data[(this->_head + idx) % this->_capacity].~T();
 					}
-					free(_data);
+					free(this->_data);
 				}
 			}
 
 			size_t length() const {
-				return _length;
+				return this->_length;
 			}
 
 			bool isEmpty() const {
-				return _length == 0;
+				return this->_length == 0;
 			}
 
 			void push(const T& item) {

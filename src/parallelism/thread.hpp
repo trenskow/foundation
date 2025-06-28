@@ -14,9 +14,11 @@
 
 #include "../memory/object.hpp"
 
+using namespace foundation::memory;
+
 namespace foundation::parallelism {
 
-	class Thread: public foundation::memory::Object {
+	class Thread: public Object {
 
 		public:
 
