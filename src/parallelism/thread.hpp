@@ -13,8 +13,10 @@
 #include <functional>
 
 #include "../memory/object.hpp"
+#include "../types/string.hpp"
 
 using namespace foundation::memory;
+using namespace foundation::types;
 
 namespace foundation::parallelism {
 
@@ -22,7 +24,10 @@ namespace foundation::parallelism {
 
 		public:
 
-			Thread(std::function<void()> function);
+			Thread(
+				const String name,
+				std::function<void()> function);
+
 			Thread(const Thread&) = delete;
 			Thread(Thread&&) = delete;
 

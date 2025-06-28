@@ -27,7 +27,9 @@ namespace foundation::parallelism {
 
 		public:
 
-			RunLoop();
+			RunLoop(
+				uint64_t id = 0);
+
 			RunLoop(const RunLoop&) = delete;
 			RunLoop(RunLoop&&) = delete;
 
@@ -35,12 +37,14 @@ namespace foundation::parallelism {
 
 			size_t taskCount() const;
 
-			void start();
+			RunLoop& start();
 			void stop();
 
 			void post(std::function<void()> function);
 
 		private:
+
+			uint64_t _id;
 
 			Mutex _mutex;
 

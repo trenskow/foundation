@@ -10,12 +10,14 @@
 
 using namespace foundation::parallelism;
 
-RunLoop::RunLoop()
-	: Object(),
-	  _mutex(),
-	  _thread(nullptr),
-	  _tasks(),
-	  _shouldStop(false) { }
+RunLoop::RunLoop(
+	uint64_t id
+) : Object(),
+	_id(id),
+    _mutex(),
+    _thread(nullptr),
+    _tasks(),
+    _shouldStop(false) { }
 
 RunLoop::~RunLoop() {
 	this->stop();
@@ -27,17 +29,17 @@ size_t RunLoop::taskCount() const {
 	});
 }
 
-void RunLoop::start() {
+RunLoop& RunLoop::start() {
 
-	this->_mutex.locked([&]() {
+	if (!this->_thread.equals(nullptr)) {
+		return *this;
+	}
 
-		if (!this->_thread.equals(nullptr)) {
-			return;
-		}
+	this->_shouldStop = false;
 
-		this->_shouldStop = false;
-
-		this->_thread = Strong<Thread>([&]() {
+	this->_thread = Strong<Thread>(
+		String::format("RunLoop-%llu", this->_id),
+		[&]() {
 
 			this->_mutex.lock();
 
@@ -65,7 +67,7 @@ void RunLoop::start() {
 
 		});
 
-	});
+	return *this;
 
 }
 

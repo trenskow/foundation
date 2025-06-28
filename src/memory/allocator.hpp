@@ -11,6 +11,8 @@
 
 #include <stdint.h>
 
+#define FOUNDATION_BLOCK_SIZE 32
+
 namespace foundation::memory {
 
 	class Allocator {

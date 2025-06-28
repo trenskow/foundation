@@ -14,8 +14,6 @@
 
 #include "allocator.hpp"
 
-#define FOUNDATION_BLOCK_SIZE 32
-
 using namespace foundation::memory;
 using namespace foundation::exceptions::memory;
 using namespace foundation::tools;

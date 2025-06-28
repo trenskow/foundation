@@ -24,8 +24,8 @@ namespace foundation::tools {
 		public:
 
 			Queue() {
-				_capacity = 0;
-				_data = nullptr;
+				_capacity = FOUNDATION_BLOCK_SIZE;
+				_data = (T*)calloc(FOUNDATION_BLOCK_SIZE, sizeof(T));
 				_length = 0;
 				_head = 0;
 				_tail = 0;
@@ -40,12 +40,10 @@ namespace foundation::tools {
 			) = delete;
 
 			virtual ~Queue() {
-				if (this->_data != nullptr) {
-					for (size_t idx = 0 ; idx < this->_length ; idx++) {
-						this->_data[(this->_head + idx) % this->_capacity].~T();
-					}
-					free(this->_data);
+				for (size_t idx = 0 ; idx < this->_length ; idx++) {
+					this->_data[(this->_head + idx) % this->_capacity].~T();
 				}
+				free(this->_data);
 			}
 
 			size_t length() const {
@@ -64,12 +62,11 @@ namespace foundation::tools {
 					T* newData = (T*)calloc(this->_capacity + 1, sizeof(T));
 
 					for (size_t idx = 0 ; idx < this->_length ; idx++) {
-						newData[idx] = std::move(this->_data[(this->_head + idx) % this->_capacity]);
+						new (&newData[idx]) T(
+							std::move(this->_data[(this->_head + idx) % this->_capacity]));
 					}
 
-					if (this->_data != nullptr) {
-						free(this->_data);
-					}
+					free(this->_data);
 
 					this->_data = newData;
 					this->_capacity = newCapacity;
