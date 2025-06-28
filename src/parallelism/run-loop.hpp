@@ -10,8 +10,6 @@
 #define foundation_parallelism_run_loop_hpp
 
 #include <functional>
-#include <queue>
-#include <thread>
 
 #include "../memory/strong.hpp"
 #include "../memory/object.hpp"
@@ -33,7 +31,7 @@ namespace foundation::parallelism {
 			RunLoop(const RunLoop&) = delete;
 			RunLoop(RunLoop&&) = delete;
 
-			~RunLoop();
+			virtual ~RunLoop();
 
 			size_t taskCount() const;
 

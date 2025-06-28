@@ -67,7 +67,9 @@ namespace foundation::tools {
 						newData[idx] = std::move(this->_data[(this->_head + idx) % this->_capacity]);
 					}
 
-					free(this->_data);
+					if (this->_data != nullptr) {
+						free(this->_data);
+					}
 
 					this->_data = newData;
 					this->_capacity = newCapacity;

@@ -756,8 +756,7 @@ namespace foundation::types {
 			}
 
 			Storage* release() const {
-				this->_retainCount--;
-				if (this->_retainCount == 0) {
+				if ((this->_retainCount--) == 0) {
 					delete(this);
 				}
 				return nullptr;
