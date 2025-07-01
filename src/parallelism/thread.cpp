@@ -20,11 +20,13 @@ Thread::Thread(
 	std::function<void()> function
 ) : foundation::memory::Object(),
     _function([=]() {
+#if defined(__APPLE__) || defined(__linux__)
     	name.withCString([&](const char* cString) {
 #if defined(__APPLE__)
     		pthread_setname_np(cString);
 #elif defined(__linux__)
     		pthread_setname_np(pthread_self(), cString);
+#endif
 #endif
     	});
     	function();
