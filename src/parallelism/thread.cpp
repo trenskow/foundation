@@ -27,8 +27,8 @@ Thread::Thread(
 #elif defined(__linux__)
     		pthread_setname_np(pthread_self(), cString);
 #endif
-#endif
     	});
+#endif
     	function();
     }) {
 	
