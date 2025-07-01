@@ -16,7 +16,11 @@ using namespace foundation::parallelism;
 using namespace foundation::types;
 
 Thread::Thread(
+#if defined(__APPLE__) || defined(__linux__)
 	const String name,
+#else
+	const String,
+#endif
 	std::function<void()> function
 ) : foundation::memory::Object(),
     _function([=]() {
