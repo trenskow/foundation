@@ -19,7 +19,6 @@ add_library(foundation ${LIBRARY_BUILD_TYPE}
 	src/memory/allocator.cpp
 	src/memory/object.cpp
 	src/parallelism/mutex.cpp
-	src/parallelism/run-loop.cpp
 	src/parallelism/thread.cpp
 	src/serialization/json.cpp
 	src/system/endian.cpp
