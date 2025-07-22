@@ -88,7 +88,9 @@ namespace foundation::memory {
 			other._object = nullptr;
 		}
 
-		Strong(const Weak<T>& other) : _object(other) {}
+		Strong(const Weak<T>& other) : _object(nullptr) {
+			_setObject(other);
+		}
 
 		template<typename... Args>
 		explicit Strong(Args&&... args) : _object(nullptr) {
