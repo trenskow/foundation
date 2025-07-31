@@ -496,16 +496,24 @@ Strong<String> JSON::_stringify(
 
 			auto dictionary = data.as<Dictionary<Type, Type>>();
 
-			result->append(String::join(dictionary.keys()->map<String>([&](const Type& key) {
-				if (key.kind() != Type::Kind::string) {
-					throw EncoderTypeException();
-				}
-				Strong<String> result;
-				result->append(this->_stringify(key, referencesNested));
-				result->append(":");
-				result->append(this->_stringify(dictionary.get(key), referencesNested));
-				return result;
-			}), ","));
+			result->append(String::join(dictionary
+				.keys()
+				->map<String>([&](const Type& key) {
+					if (!key.is(Type::Kind::string)) {
+						throw EncoderTypeException();
+					}
+					return key.as<String>();
+				})
+				->sorted([](const String& a, const String& b) {
+					return a.greaterThan(b);
+				})
+				->map<String>([&](const Type& key) {
+					Strong<String> result;
+					result->append(this->_stringify(key, referencesNested));
+					result->append(":");
+					result->append(this->_stringify(dictionary.get(key), referencesNested));
+					return result;
+				}), ","));
 
 			result->append("}");
 

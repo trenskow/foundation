@@ -149,6 +149,10 @@ namespace foundation::memory {
 			return this->_object == nullptr;
 		}
 
+		bool equals(const T* other) const {
+			return this->_object == other;
+		}
+
 		template<typename O>
 		Strong<O> as() const {
 			return Strong<O>((O*)_object);
