@@ -509,7 +509,7 @@ Strong<String> JSON::_stringify(
 				})
 				->map<String>([&](const Type& key) {
 					Strong<String> result;
-					result->append(this->_stringify(key, referencesNested));
+					result->append(this->_stringify(key, references));
 					result->append(":");
 					result->append(this->_stringify(dictionary.get(key), referencesNested));
 					return result;
@@ -602,13 +602,13 @@ Strong<String> JSON::_stringify(
 				data.as<Date>()
 					.to(Date::TimeZone::utc)
 					.toISO8601(),
-				referencesNested);
+				references);
 			break;
 		case Type::Kind::uuid:
 			return this->_stringify(
 				data.as<UUID>()
 					.string(),
-					referencesNested);
+					references);
 		default:
 			throw EncoderTypeException();
 	}
