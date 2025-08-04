@@ -484,9 +484,6 @@ Strong<String> JSON::_stringify(
 		throw JSONEncodingCircularReferenceException();
 	}
 
-	Data<void*> referencesNested = references
-		.appending((void*)&data);
-
 	Strong<String> result;
 
 	switch (data.kind()) {
@@ -511,7 +508,7 @@ Strong<String> JSON::_stringify(
 					Strong<String> result;
 					result->append(this->_stringify(key, references));
 					result->append(":");
-					result->append(this->_stringify(dictionary.get(key), referencesNested));
+					result->append(this->_stringify(dictionary.get(key), references.appending((void*)&data)));
 					return result;
 				}), ","));
 
@@ -526,7 +523,7 @@ Strong<String> JSON::_stringify(
 			result->append("[");
 
 			result->append(String::join(array.map<String>([&](const Type& item) {
-				return this->_stringify(item, referencesNested);
+				return this->_stringify(item, references.appending((void*)&data));
 			}), ","));
 
 			result->append("]");
