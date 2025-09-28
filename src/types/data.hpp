@@ -416,7 +416,7 @@ namespace foundation::types {
 
 		size_t copy(void* bytes, size_t length, size_t offset = 0) {
 			if (offset > this->length()) return 0;
-			this->ensureStorageOwnership();
+			this->_ensureStorageOwnership();
 			length = math::min(length, this->length() - offset);
 			memcpy(bytes, this->items(), sizeof(T) * length);
 			return length;

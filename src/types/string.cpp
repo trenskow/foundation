@@ -681,8 +681,6 @@ Data<uint32_t> String::_decodeHex(
 	const Data<uint8_t>& buffer
 ) noexcept(false) {
 
-	if (buffer.length() % 2 != 0) throw OutOfBoundException(buffer.length() + 1);
-
 	Data<uint32_t> ret;
 
 	for (size_t idx = 0 ; idx < buffer.length() ; idx++) {
