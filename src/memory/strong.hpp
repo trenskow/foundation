@@ -178,6 +178,10 @@ namespace foundation::memory {
 			return Strong<T>(this->_object);
 		}
 
+		Object* object() const {
+			return this->_object;
+		}
+
 	};
 
 }
