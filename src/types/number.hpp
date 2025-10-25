@@ -74,7 +74,7 @@ namespace foundation::types {
 					Data<T> boundaries = range.split("...")
 						->mapToData<T>([&](const String& boundary, size_t idx) {
 
-							T value = numeric_limits<T>::min();
+							T value = numeric_limits<T>::lowest();
 
 							if (boundary.equals("")) {
 								if (idx == 1) value = numeric_limits<T>::max();
@@ -83,7 +83,7 @@ namespace foundation::types {
 							}
 
 							return (T)math::max<T>(
-								numeric_limits<T>::min(),
+								numeric_limits<T>::lowest(),
 								math::min<T>(
 									numeric_limits<T>::max(),
 									value));
@@ -94,7 +94,7 @@ namespace foundation::types {
 						throw RangeParserException();
 					}
 
-					T lowerBoundary = numeric_limits<T>::min();
+					T lowerBoundary = numeric_limits<T>::lowest();
 					T upperBoundary = numeric_limits<T>::max();
 
 					if (boundaries.length() == 1) {
