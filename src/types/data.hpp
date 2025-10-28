@@ -700,6 +700,10 @@ namespace foundation::types {
 		class Storage : public Allocator {
 
 		public:
+
+			Storage(const Storage&) = delete;
+			Storage(Storage&&) = delete;
+
 			Storage(const size_t length = 0) : _ptr(nullptr), _length(0), _retainCount(1) {
 				this->ensureStorageSize(length);
 			}
@@ -756,7 +760,7 @@ namespace foundation::types {
 			}
 
 			Storage* release() const {
-				if ((this->_retainCount--) == 0) {
+				if (--this->_retainCount == 0) {
 					delete(this);
 				}
 				return nullptr;
